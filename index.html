@@ -2186,10 +2186,16 @@ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(()=>{});
 // 3. FIRESTORE — SAVE & REALTIME
 // ══════════════════════════════════════════════════════
 function saveToFirestore() {
-  if (!currentFamily) return;
+  if (!currentFamily) { console.warn('saveToFirestore: no currentFamily'); return; }
+  if (!auth.currentUser) { console.warn('saveToFirestore: no auth user'); return; }
+  console.log('💾 Saving to Firestore, family:', currentFamily.code, 'user:', auth.currentUser.uid);
   db.collection('families').doc(currentFamily.code)
     .set(currentFamily)
-    .catch(e => console.error('Save error:', e));
+    .then(() => console.log('💾 Firestore save OK'))
+    .catch(e => {
+      console.error('💾 Firestore save ERROR:', e.code, e.message);
+      showToast('❌ Erreur de sauvegarde: ' + e.code, 'error');
+    });
 }
 
 function subscribeFamily(code) {
