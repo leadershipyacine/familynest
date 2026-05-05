@@ -2197,6 +2197,23 @@ function subscribeFamily(code) {
   _unsubFamily = db.collection('families').doc(code).onSnapshot(snap => {
     if (!snap.exists) return;
     currentFamily = snap.data();
+
+    // ── Vérification temps réel : blocage pendant la session ──
+    if (currentUser && document.getElementById('app').style.display === 'flex') {
+      const me = (currentFamily.members || []).find(m =>
+        String(m.id) === String(currentUser.uid) || m.email === currentUser.email
+      );
+      if (me && me.status === 'blocked') {
+        if (_unsubFamily) _unsubFamily();
+        auth.signOut();
+        currentFamily = null; currentUser = null;
+        document.getElementById('app').style.display = 'none';
+        document.getElementById('auth-screen').style.display = 'flex';
+        showToast('🚫 Votre compte a été bloqué par un administrateur.', 'error');
+        return;
+      }
+    }
+
     // Refresh UI si l'app est ouverte
     if (document.getElementById('app').style.display === 'flex') {
       updateSidebar();
@@ -2359,20 +2376,19 @@ function logout() {
 auth.onAuthStateChanged(user => {
   if (!user) {
     hideLoading();
-    // Pré-remplir email sauvegardé
     const saved = localStorage.getItem('fn_email');
     if (saved) { const inp = document.getElementById('login-email'); if(inp) inp.value = saved; }
     document.getElementById('auth-screen').style.display = 'flex';
     document.getElementById('app').style.display = 'none';
     return;
   }
-  // Utilisateur connecté — charger son profil
   showLoading('Chargement de votre foyer…');
   db.collection('users').doc(user.uid).get()
     .then(snap => {
       if (!snap.exists) { auth.signOut(); hideLoading(); return; }
       const userData = snap.data();
-      // Check if user is approved (pending join requests are not approved yet)
+
+      // ── Vérification 1 : compte en attente d'approbation ──
       if (userData.approved === false) {
         hideLoading();
         auth.signOut();
@@ -2380,19 +2396,42 @@ auth.onAuthStateChanged(user => {
         showToast('Votre demande est en attente d\'approbation par un parent.', 'warning');
         return;
       }
+
       currentUser = { uid: user.uid, ...userData };
-      // S'abonner en temps réel à la famille
+
+      // ── Charger la famille puis vérifier le blocage ──
       subscribeFamily(currentUser.familyCode);
-      // Attendre le premier snapshot
+
       const wait = setInterval(() => {
         if (currentFamily) {
           clearInterval(wait);
+
+          // ── Vérification 2 : compte bloqué par un admin ──
+          const memberInFamily = (currentFamily.members || []).find(m =>
+            String(m.id) === String(user.uid) || m.email === userData.email
+          );
+
+          if (memberInFamily && memberInFamily.status === 'blocked') {
+            hideLoading();
+            auth.signOut();
+            currentFamily = null;
+            currentUser = null;
+            document.getElementById('auth-screen').style.display = 'flex';
+            showToast('🚫 Votre compte a été bloqué. Contactez un parent.', 'error');
+            return;
+          }
+
           hideLoading();
           launchApp();
         }
       }, 100);
+
       // Timeout 10s
-      setTimeout(() => { clearInterval(wait); hideLoading(); if(!currentFamily) showToast('Erreur de chargement', 'error'); }, 10000);
+      setTimeout(() => {
+        clearInterval(wait);
+        hideLoading();
+        if (!currentFamily) showToast('Erreur de chargement — réessayez', 'error');
+      }, 10000);
     })
     .catch(e => { hideLoading(); console.error('Load user error:', e); auth.signOut(); });
 });
