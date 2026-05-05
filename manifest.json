@@ -1,0 +1,52 @@
+{
+  "name": "FamilyNest — Votre foyer numérique",
+  "short_name": "FamilyNest",
+  "description": "Gérez toute la vie de famille en un seul endroit",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#3D5A47",
+  "theme_color": "#3D5A47",
+  "lang": "fr",
+  "categories": ["lifestyle", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Tableau de bord",
+      "short_name": "Accueil",
+      "description": "Voir le tableau de bord",
+      "url": "/?section=dashboard",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Courses",
+      "short_name": "Courses",
+      "description": "Liste de courses",
+      "url": "/?section=courses",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Agenda",
+      "short_name": "Agenda",
+      "description": "Voir l'agenda famille",
+      "url": "/?section=agenda",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}
