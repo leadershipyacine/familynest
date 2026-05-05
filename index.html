@@ -2464,6 +2464,33 @@ function launchApp() {
   updateSidebar(); renderDashboard(); renderCalendar();
   updateBadges(); updateTopbarDate();
   setTimeout(checkAutoAlerts, 1200);
+  showFirebaseStatus();
+}
+
+function showFirebaseStatus() {
+  const existing = document.getElementById('fb-status-badge');
+  if (existing) existing.remove();
+  const badge = document.createElement('div');
+  badge.id = 'fb-status-badge';
+  badge.style.cssText = 'position:fixed;bottom:20px;left:270px;z-index:999;background:#1a0f40;color:white;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:7px;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:opacity 0.5s;';
+  badge.innerHTML = '<span id="fb-dot" style="width:8px;height:8px;border-radius:50%;background:#E67E22;display:inline-block;flex-shrink:0"></span><span id="fb-text">Connexion Firebase…</span>';
+  document.body.appendChild(badge);
+  db.collection('families').doc(currentFamily.code).get()
+    .then(snap => {
+      if (snap.exists) {
+        document.getElementById('fb-dot').style.background = '#27AE60';
+        document.getElementById('fb-text').textContent = '✅ Firebase connecté';
+        setTimeout(() => { badge.style.opacity='0'; setTimeout(()=>badge.remove(),500); }, 4000);
+      } else {
+        document.getElementById('fb-dot').style.background = '#E67E22';
+        document.getElementById('fb-text').textContent = '⚠️ Famille introuvable dans Firestore';
+      }
+    })
+    .catch(e => {
+      document.getElementById('fb-dot').style.background = '#C0392B';
+      document.getElementById('fb-text').textContent = '❌ ' + (e.code || 'Erreur Firebase');
+      console.error('Firebase status:', e);
+    });
 }
 
 // ══════════════════════════════════════════════════════
