@@ -783,22 +783,61 @@ hr.divider-line{border:none;border-top:1px solid var(--warm);margin:14px 0;}
 
       <!-- DEPENSES -->
       <div class="section" id="section-depenses">
+
+        <!-- TABLEAU DE BORD FINANCIER -->
+        <div id="finance-dashboard" class="mb-16">
+          <div class="grid-4 mb-12" id="finance-stats"></div>
+          <div id="finance-advice" class="card mb-12" style="border-left:4px solid var(--forest)"></div>
+        </div>
+
         <div class="grid-2">
-          <div class="card">
-            <div class="card-header"><div class="card-title">💳 Dépenses récentes</div><button class="btn btn-primary btn-sm" onclick="openExpenseModal()">+ Dépense</button></div>
-            <div id="expenses-list"></div>
-          </div>
           <div>
+            <!-- REVENUS PAR PARENT -->
             <div class="card mb-16">
-              <div class="card-header"><div class="card-title">🔄 Charges mensuelles fixes</div><button class="btn btn-secondary btn-sm" onclick="openChargeModal()">+ Charge</button></div>
-              <div id="charges-list"></div>
-              <div style="border-top:1px solid var(--warm);margin-top:10px;padding-top:10px;font-size:13px;color:var(--light);">
-                <span class="monthly-badge">🔄 Mensuel</span> = se répète chaque mois automatiquement
+              <div class="card-header">
+                <div class="card-title">💰 Revenus famille</div>
+                <button class="btn btn-primary btn-sm" onclick="openRevenuModal()">+ Revenu</button>
               </div>
+              <div id="revenus-list"></div>
+              <div id="revenus-total" style="margin-top:12px;padding-top:12px;border-top:2px solid var(--warm)"></div>
             </div>
+
+            <!-- DÉPENSES RÉCENTES -->
             <div class="card">
-              <div class="card-header"><div class="card-title">🎯 Budget mensuel</div></div>
+              <div class="card-header">
+                <div class="card-title">💳 Dépenses récentes</div>
+                <div style="display:flex;gap:6px">
+                  <select id="expense-filter-month" onchange="renderExpenses()" style="padding:6px 10px;border:2px solid var(--warm);border-radius:8px;font-family:inherit;font-size:12px;outline:none">
+                    <option value="">Tous les mois</option>
+                  </select>
+                  <button class="btn btn-primary btn-sm" onclick="openExpenseModal()">+ Dépense</button>
+                </div>
+              </div>
+              <div id="expenses-list"></div>
+            </div>
+          </div>
+
+          <div>
+            <!-- CHARGES FIXES -->
+            <div class="card mb-16">
+              <div class="card-header">
+                <div class="card-title">🔄 Charges fixes mensuelles</div>
+                <button class="btn btn-secondary btn-sm" onclick="openChargeModal()">+ Charge</button>
+              </div>
+              <div id="charges-list"></div>
+              <div id="charges-total" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--warm)"></div>
+            </div>
+
+            <!-- ÉTAT FINANCIER -->
+            <div class="card mb-16">
+              <div class="card-header"><div class="card-title">📊 État financier mensuel</div></div>
               <div id="budget-summary"></div>
+            </div>
+
+            <!-- RÉPARTITION PAR CATÉGORIE -->
+            <div class="card">
+              <div class="card-header"><div class="card-title">📈 Répartition des dépenses</div></div>
+              <div id="expense-breakdown"></div>
             </div>
           </div>
         </div>
@@ -1393,9 +1432,31 @@ hr.divider-line{border:none;border-top:1px solid var(--warm);margin:14px 0;}
 
       <!-- ══ ADMINISTRATION ══ -->
       <div class="section" id="section-admin">
-        <div class="grid-2">
 
-          <!-- Stats globales -->
+        <!-- STATS PLATEFORME GLOBALE — superadmin uniquement -->
+        <div class="card mb-16" style="border:2px solid var(--forest)">
+          <div class="card-header">
+            <div class="card-title">🌍 Statistiques de la plateforme</div>
+            <button class="btn btn-secondary btn-sm" onclick="loadPlatformStats()">🔄 Actualiser</button>
+          </div>
+          <div id="platform-stats-loading" style="text-align:center;padding:20px;color:var(--light)">Cliquez sur Actualiser pour charger les statistiques</div>
+          <div id="platform-stats" style="display:none">
+            <div class="grid-4 mb-16" id="platform-counters"></div>
+            <div class="grid-2">
+              <div>
+                <div style="font-size:13px;font-weight:700;color:var(--mid);margin-bottom:10px">🌍 Utilisateurs par pays</div>
+                <div id="platform-by-country"></div>
+              </div>
+              <div>
+                <div style="font-size:13px;font-weight:700;color:var(--mid);margin-bottom:10px">📅 Inscriptions récentes</div>
+                <div id="platform-recent"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Stats famille -->
           <div>
             <div class="card mb-16">
               <div class="card-title mb-16">📊 Vue globale famille</div>
@@ -1412,12 +1473,10 @@ hr.divider-line{border:none;border-top:1px solid var(--warm);margin:14px 0;}
           </div>
 
           <div>
-            <!-- Logs d'activité -->
             <div class="card mb-16">
               <div class="card-title mb-16">📋 Journal d'activité</div>
               <div id="admin-logs" style="max-height:300px;overflow-y:auto"></div>
             </div>
-            <!-- Danger zone admin -->
             <div class="card mb-16" style="border:2px solid var(--warning)">
               <div class="card-title mb-12" style="color:var(--warning)">⚠️ Actions administrateur</div>
               <div style="display:flex;flex-direction:column;gap:8px">
@@ -1426,7 +1485,6 @@ hr.divider-line{border:none;border-top:1px solid var(--warm);margin:14px 0;}
                 <button class="btn btn-secondary btn-sm" onclick="adminSendTestEmail()">📧 Tester l'envoi d'email</button>
               </div>
             </div>
-            <!-- Paramètres famille -->
             <div class="card">
               <div class="card-title mb-16">🏠 Paramètres de la famille</div>
               <div class="form-group">
@@ -1657,6 +1715,41 @@ hr.divider-line{border:none;border-top:1px solid var(--warm);margin:14px 0;}
 </div>
 
 <!-- EXPENSE MODAL -->
+<!-- REVENU MODAL -->
+<div class="modal-overlay" id="modal-revenu">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">💰 Ajouter un revenu</div><button class="close-btn" onclick="closeModal('modal-revenu')">✕</button></div>
+    <div class="form-group"><label>Type de revenu</label>
+      <select id="rev-type">
+        <option value="salaire">💼 Salaire net</option>
+        <option value="prime">🎯 Prime / Bonus</option>
+        <option value="loyer">🏠 Loyer perçu</option>
+        <option value="freelance">💻 Freelance / Auto-entrepreneur</option>
+        <option value="allocations">👶 Allocations familiales</option>
+        <option value="pension">🧓 Pension / Retraite</option>
+        <option value="autre">⭐ Autre revenu</option>
+      </select>
+    </div>
+    <div class="input-row">
+      <div class="form-group"><label>Membre</label><select id="rev-membre"><option>Toute la famille</option></select></div>
+      <div class="form-group"><label>Montant (<span class="curr-sym">€</span>)</label><input type="number" id="rev-montant" placeholder="2500" min="0" step="0.01"></div>
+    </div>
+    <div class="input-row">
+      <div class="form-group"><label>Date de réception</label><input type="date" id="rev-date"></div>
+      <div class="form-group"><label>Récurrence</label>
+        <select id="rev-recurrence">
+          <option value="mensuel">🔄 Mensuel</option>
+          <option value="ponctuel">1️⃣ Ponctuel</option>
+          <option value="trimestriel">📅 Trimestriel</option>
+          <option value="annuel">📆 Annuel</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label>Notes</label><input type="text" id="rev-notes" placeholder="Salaire janvier 2025..."></div>
+    <button class="btn btn-primary" onclick="saveRevenu()">💾 Enregistrer</button>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modal-expense">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">💶 Nouvelle dépense</div><button class="close-btn" onclick="closeModal('modal-expense')">✕</button></div>
@@ -3740,7 +3833,490 @@ function toggleNotifDoc(type){
   const w=document.getElementById('notif-'+type+'-wrap');if(w)w.classList.toggle('active',docNotifs[type]);
 }
 
-// ══ USER MENU (topbar) ══
+// ══════════════════════════════════════════════════════
+// TRADUCTIONS — SYSTÈME COMPLET
+// ══════════════════════════════════════════════════════
+const TRANSLATIONS = {
+  fr: {
+    dashboard:'Tableau de bord', membres:'Membres', agenda:'Agenda',
+    depenses:'Dépenses & Revenus', factures:'Factures', biens:'Biens',
+    documents:'Documents', alertes:'Alertes', enfants:'Enfants & École',
+    vacances:'Vacances', courses:'Courses', repas:'Repas & Cuisine',
+    taches:'Tâches ménagères', tvatt:'Tvätstuga', scan:'Scanner & Import',
+    sante:'Santé & Médical', vehicules:'Véhicules', maison:'Entretien maison',
+    contacts:'Contacts & Urgences', assistant:'Assistant IA', emailconfig:'Config. Email',
+    parametres:'Paramètres', admin:'Administration',
+    // Auth
+    login_title:'Bon retour 👋', login_sub:'Connectez-vous pour accéder à votre foyer',
+    tab_login:'Connexion', tab_register:'Créer un compte', tab_join:'Rejoindre ma famille',
+    // Buttons
+    add:'+ Ajouter', save:'💾 Enregistrer', cancel:'Annuler', delete:'Supprimer',
+    edit:'Modifier', logout:'🚪 Déconnexion', my_profile:'👤 Mon profil',
+    // Common
+    welcome:'Bienvenue', family:'Famille', member:'Membre', email:'Email',
+    password:'Mot de passe', firstname:'Prénom', lastname:'Nom', role:'Rôle',
+    country:'Pays', language:'Langue', currency:'Devise',
+    required:'Tous les champs sont obligatoires',
+  },
+  sv: {
+    dashboard:'Instrumentpanel', membres:'Medlemmar', agenda:'Kalender',
+    depenses:'Utgifter & Inkomster', factures:'Fakturor', biens:'Tillgångar',
+    documents:'Dokument', alertes:'Aviseringar', enfants:'Barn & Skola',
+    vacances:'Semester', courses:'Inköp', repas:'Mat & Matlagning',
+    taches:'Hushållssysslor', tvatt:'Tvättstuga', scan:'Skanna & Importera',
+    sante:'Hälsa & Medicin', vehicules:'Fordon', maison:'Hemunderhåll',
+    contacts:'Kontakter & Nöd', assistant:'AI-assistent', emailconfig:'E-postkonfig.',
+    parametres:'Inställningar', admin:'Administration',
+    // Auth
+    login_title:'Välkommen tillbaka 👋', login_sub:'Logga in för att komma åt ditt hem',
+    tab_login:'Logga in', tab_register:'Skapa familj', tab_join:'Gå med i familj',
+    // Buttons
+    add:'+ Lägg till', save:'💾 Spara', cancel:'Avbryt', delete:'Ta bort',
+    edit:'Redigera', logout:'🚪 Logga ut', my_profile:'👤 Min profil',
+    // Common
+    welcome:'Välkommen', family:'Familj', member:'Medlem', email:'E-post',
+    password:'Lösenord', firstname:'Förnamn', lastname:'Efternamn', role:'Roll',
+    country:'Land', language:'Språk', currency:'Valuta',
+    required:'Alla fält är obligatoriska',
+  },
+  en: {
+    dashboard:'Dashboard', membres:'Members', agenda:'Calendar',
+    depenses:'Expenses & Income', factures:'Invoices', biens:'Assets',
+    documents:'Documents', alertes:'Alerts', enfants:'Children & School',
+    vacances:'Vacations', courses:'Shopping', repas:'Meals & Cooking',
+    taches:'Household Tasks', tvatt:'Laundry Room', scan:'Scan & Import',
+    sante:'Health & Medical', vehicules:'Vehicles', maison:'Home Maintenance',
+    contacts:'Contacts & Emergency', assistant:'AI Assistant', emailconfig:'Email Config',
+    parametres:'Settings', admin:'Administration',
+    login_title:'Welcome back 👋', login_sub:'Sign in to access your home',
+    tab_login:'Sign In', tab_register:'Create Family', tab_join:'Join Family',
+    add:'+ Add', save:'💾 Save', cancel:'Cancel', delete:'Delete',
+    edit:'Edit', logout:'🚪 Sign Out', my_profile:'👤 My Profile',
+    welcome:'Welcome', family:'Family', member:'Member', email:'Email',
+    password:'Password', firstname:'First Name', lastname:'Last Name', role:'Role',
+    country:'Country', language:'Language', currency:'Currency',
+    required:'All fields are required',
+  },
+  ar: {
+    dashboard:'لوحة التحكم', membres:'الأعضاء', agenda:'التقويم',
+    depenses:'المصاريف والدخل', factures:'الفواتير', biens:'الممتلكات',
+    documents:'الوثائق', alertes:'التنبيهات', enfants:'الأطفال والمدرسة',
+    vacances:'العطل', courses:'التسوق', repas:'الوجبات والطبخ',
+    taches:'المهام المنزلية', tvatt:'غرفة الغسيل', scan:'مسح واستيراد',
+    sante:'الصحة والطب', vehicules:'السيارات', maison:'صيانة المنزل',
+    contacts:'جهات الاتصال', assistant:'المساعد الذكي', emailconfig:'إعداد البريد',
+    parametres:'الإعدادات', admin:'الإدارة',
+    login_title:'مرحباً بعودتك 👋', login_sub:'تسجيل الدخول للوصول إلى منزلك',
+    tab_login:'تسجيل الدخول', tab_register:'إنشاء عائلة', tab_join:'الانضمام لعائلة',
+    add:'+ إضافة', save:'💾 حفظ', cancel:'إلغاء', delete:'حذف',
+    edit:'تعديل', logout:'🚪 تسجيل الخروج', my_profile:'👤 ملفي',
+    welcome:'مرحباً', family:'العائلة', member:'عضو', email:'البريد الإلكتروني',
+    password:'كلمة المرور', firstname:'الاسم الأول', lastname:'اسم العائلة', role:'الدور',
+    country:'البلد', language:'اللغة', currency:'العملة',
+    required:'جميع الحقول مطلوبة',
+  },
+  de: {
+    dashboard:'Dashboard', membres:'Mitglieder', agenda:'Kalender',
+    depenses:'Ausgaben & Einnahmen', factures:'Rechnungen', biens:'Vermögen',
+    documents:'Dokumente', alertes:'Benachrichtigungen', enfants:'Kinder & Schule',
+    vacances:'Urlaub', courses:'Einkäufe', repas:'Mahlzeiten & Kochen',
+    taches:'Haushaltsaufgaben', tvatt:'Waschraum', scan:'Scannen & Importieren',
+    sante:'Gesundheit & Medizin', vehicules:'Fahrzeuge', maison:'Hauspflege',
+    contacts:'Kontakte & Notfall', assistant:'KI-Assistent', emailconfig:'E-Mail-Konfig.',
+    parametres:'Einstellungen', admin:'Administration',
+    login_title:'Willkommen zurück 👋', login_sub:'Melden Sie sich an',
+    tab_login:'Anmelden', tab_register:'Familie erstellen', tab_join:'Familie beitreten',
+    add:'+ Hinzufügen', save:'💾 Speichern', cancel:'Abbrechen', delete:'Löschen',
+    edit:'Bearbeiten', logout:'🚪 Abmelden', my_profile:'👤 Mein Profil',
+    welcome:'Willkommen', family:'Familie', member:'Mitglied', email:'E-Mail',
+    password:'Passwort', firstname:'Vorname', lastname:'Nachname', role:'Rolle',
+    country:'Land', language:'Sprache', currency:'Währung',
+    required:'Alle Felder sind erforderlich',
+  },
+  es: {
+    dashboard:'Panel', membres:'Miembros', agenda:'Agenda',
+    depenses:'Gastos e Ingresos', factures:'Facturas', biens:'Bienes',
+    documents:'Documentos', alertes:'Alertas', enfants:'Niños y Escuela',
+    vacances:'Vacaciones', courses:'Compras', repas:'Comidas y Cocina',
+    taches:'Tareas del hogar', tvatt:'Lavandería', scan:'Escanear e Importar',
+    sante:'Salud y Medicina', vehicules:'Vehículos', maison:'Mantenimiento hogar',
+    contacts:'Contactos y Emergencias', assistant:'Asistente IA', emailconfig:'Config. Email',
+    parametres:'Configuración', admin:'Administración',
+    login_title:'Bienvenido de vuelta 👋', login_sub:'Inicia sesión para acceder',
+    tab_login:'Iniciar sesión', tab_register:'Crear familia', tab_join:'Unirse a familia',
+    add:'+ Añadir', save:'💾 Guardar', cancel:'Cancelar', delete:'Eliminar',
+    edit:'Editar', logout:'🚪 Cerrar sesión', my_profile:'👤 Mi perfil',
+    welcome:'Bienvenido', family:'Familia', member:'Miembro', email:'Correo',
+    password:'Contraseña', firstname:'Nombre', lastname:'Apellido', role:'Rol',
+    country:'País', language:'Idioma', currency:'Moneda',
+    required:'Todos los campos son obligatorios',
+  }
+};
+
+let currentLang = 'fr';
+
+function t(key) {
+  return TRANSLATIONS[currentLang]?.[key] || TRANSLATIONS['fr']?.[key] || key;
+}
+
+function applyTranslations(lang) {
+  currentLang = lang;
+  // Update nav items
+  const navMap = {
+    dashboard:'dashboard', membres:'membres', agenda:'agenda',
+    depenses:'depenses', factures:'factures', biens:'biens',
+    documents:'documents', alertes:'alertes', enfants:'enfants',
+    vacances:'vacances', courses:'courses', repas:'repas',
+    taches:'taches', tvatt:'tvatt', scan:'scan',
+    sante:'sante', vehicules:'vehicules', maison:'maison',
+    contacts:'contacts', assistant:'assistant', emailconfig:'emailconfig',
+    parametres:'parametres', admin:'admin'
+  };
+  document.querySelectorAll('.nav-item[onclick]').forEach(item => {
+    const match = item.getAttribute('onclick')?.match(/showSection\('(\w+)'\)/);
+    if (match) {
+      const sec = match[1];
+      const key = Object.keys(navMap).find(k => navMap[k] === sec);
+      if (key && t(key)) {
+        const icon = item.querySelector('.nav-icon');
+        const badge = item.querySelector('.badge-count');
+        const iconHtml = icon ? icon.outerHTML : '';
+        const badgeHtml = badge ? badge.outerHTML : '';
+        item.innerHTML = iconHtml + t(key) + badgeHtml;
+        if (icon) item.prepend(icon.cloneNode(true));
+      }
+    }
+  });
+
+  // Update auth tabs
+  const tabs = document.querySelectorAll('.auth-tab-new');
+  if (tabs[0]) tabs[0].textContent = t('tab_login');
+  if (tabs[1]) tabs[1].textContent = t('tab_register');
+  if (tabs[2]) tabs[2].textContent = t('tab_join');
+
+  // RTL for Arabic
+  document.body.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
+
+  // Update page title if section active
+  const active = document.querySelector('.section.active');
+  if (active) {
+    const secId = active.id.replace('section-','');
+    const pt = document.getElementById('page-title');
+    if (pt && t(secId)) pt.textContent = t(secId);
+  }
+
+  // Update user dropdown
+  const mp = document.querySelector('[onclick*="openMyProfile"]');
+  if (mp) mp.textContent = t('my_profile');
+  const lo = document.querySelector('[onclick*="confirmLogout"]');
+  if (lo) lo.textContent = t('logout');
+
+  // Save to user
+  if (currentUser) currentUser.lang = lang;
+}
+
+function setLanguage(code, flag, label, name) {
+  applyTranslations(code);
+  const lf = document.getElementById('lang-flag');
+  const ll = document.getElementById('lang-label');
+  const d  = document.getElementById('lang-dropdown');
+  if (lf) lf.textContent = flag;
+  if (ll) ll.textContent = label;
+  if (d)  d.style.display = 'none';
+  // Save preference
+  localStorage.setItem('fn_lang', code);
+  if (currentUser?.uid) {
+    db.collection('users').doc(currentUser.uid).update({ lang: code }).catch(()=>{});
+  }
+}
+
+// ── IP-BASED LANGUAGE DETECTION ──
+async function detectLanguageFromIP() {
+  // Check saved preference first
+  const saved = localStorage.getItem('fn_lang');
+  if (saved && TRANSLATIONS[saved]) {
+    applyLanguageUI(saved);
+    return saved;
+  }
+  try {
+    const res  = await fetch('https://ipapi.co/json/');
+    const data = await res.json();
+    const countryCode = data.country_code;
+    const langMap = {
+      'FR':'fr','BE':'fr','CH':'fr','CA':'fr','MA':'fr','DZ':'ar','TN':'fr',
+      'SE':'sv','NO':'sv','DK':'sv',
+      'DE':'de','AT':'de',
+      'ES':'es','MX':'es','AR':'es','CO':'es',
+      'GB':'en','US':'en','AU':'en','IE':'en',
+      'SA':'ar','AE':'ar','EG':'ar'
+    };
+    const detectedLang = langMap[countryCode] || 'fr';
+    applyLanguageUI(detectedLang);
+    localStorage.setItem('fn_lang', detectedLang);
+    return detectedLang;
+  } catch(e) {
+    return 'fr';
+  }
+}
+
+function applyLanguageUI(lang) {
+  const langData = {
+    fr:{flag:'🇫🇷',label:'FR'}, sv:{flag:'🇸🇪',label:'SV'},
+    en:{flag:'🇬🇧',label:'EN'}, ar:{flag:'🇩🇿',label:'AR'},
+    de:{flag:'🇩🇪',label:'DE'}, es:{flag:'🇪🇸',label:'ES'}
+  };
+  const d = langData[lang] || langData['fr'];
+  const lf = document.getElementById('lang-flag');
+  const ll = document.getElementById('lang-label');
+  if (lf) lf.textContent = d.flag;
+  if (ll) ll.textContent = d.label;
+  applyTranslations(lang);
+}
+
+// ══════════════════════════════════════════════════════
+// MODULE DÉPENSES & REVENUS — COMPTABILITÉ FAMILIALE
+// ══════════════════════════════════════════════════════
+function renderExpenses() {
+  if (!currentFamily.revenus)  currentFamily.revenus  = [];
+  if (!currentFamily.expenses) currentFamily.expenses = [];
+  if (!currentFamily.charges)  currentFamily.charges  = [];
+
+  const now    = new Date();
+  const month  = now.getMonth();
+  const year   = now.getFullYear();
+
+  // Populate month filter
+  const mf = document.getElementById('expense-filter-month');
+  if (mf && mf.options.length <= 1) {
+    const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+    for (let i = 0; i < 12; i++) {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = months[i] + ' ' + year;
+      if (i === month) opt.selected = true;
+      mf.appendChild(opt);
+    }
+  }
+
+  const selectedMonth = mf ? parseInt(mf.value) : month;
+
+  // ── REVENUS ──
+  const totalRevenus = (currentFamily.revenus || []).reduce((s, r) => {
+    if (r.recurrence === 'mensuel') return s + (parseFloat(r.montant)||0);
+    if (r.recurrence === 'ponctuel') {
+      const d = new Date(r.date);
+      if (d.getMonth() === selectedMonth && d.getFullYear() === year) return s + (parseFloat(r.montant)||0);
+    }
+    return s;
+  }, 0);
+
+  // Add salaries from member profiles
+  const salaryTotal = (currentFamily.members || []).reduce((s, m) => {
+    return s + (parseFloat(m.salary)||0) + (parseFloat(m.otherIncome)||0);
+  }, 0);
+
+  const totalIncome = Math.max(totalRevenus, salaryTotal);
+
+  const rl = document.getElementById('revenus-list');
+  if (rl) {
+    const byMember = {};
+    (currentFamily.members || []).forEach(m => {
+      if (m.salary || m.otherIncome) {
+        byMember[m.firstname] = { salary: m.salary||0, other: m.otherIncome||0, color: m.color };
+      }
+    });
+    (currentFamily.revenus || []).forEach(r => {
+      if (!byMember[r.membre]) byMember[r.membre] = { salary: 0, other: 0, extras: [] };
+      if (!byMember[r.membre].extras) byMember[r.membre].extras = [];
+      byMember[r.membre].extras.push(r);
+    });
+    rl.innerHTML = Object.entries(byMember).map(([name, data]) => {
+      const total = (data.salary||0) + (data.other||0) + ((data.extras||[]).reduce((s,e)=>s+(parseFloat(e.montant)||0),0));
+      return `<div class="expense-row">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:36px;height:36px;border-radius:50%;background:${data.color||'var(--forest)'};display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px">${name[0]}</div>
+          <div>
+            <div style="font-weight:700;font-size:14px">${name}</div>
+            <div style="font-size:12px;color:var(--light)">
+              ${data.salary ? '💼 Salaire: ' + fmt(data.salary) : ''}
+              ${data.other ? ' + Autres: ' + fmt(data.other) : ''}
+            </div>
+          </div>
+        </div>
+        <span style="font-weight:700;color:var(--success);font-size:16px">${fmt(total)}</span>
+      </div>`;
+    }).join('') || '<p style="color:var(--light);font-size:13px">Ajoutez vos revenus via Mon profil ou + Revenu</p>';
+  }
+
+  const rt = document.getElementById('revenus-total');
+  if (rt) rt.innerHTML = `<div class="flex-between"><span style="font-weight:700">Total revenus mensuels</span><span style="font-weight:700;font-size:18px;color:var(--success)">${fmt(totalIncome)}</span></div>`;
+
+  // ── CHARGES ──
+  const totalCharges = (currentFamily.charges || []).reduce((s, c) => s + (parseFloat(c.amount)||0), 0);
+  const cl = document.getElementById('charges-list');
+  if (cl) cl.innerHTML = (currentFamily.charges || []).map(c => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--cream)">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:9px;height:9px;border-radius:50%;background:${c.color||'var(--forest)'}"></div>
+        <span style="font-size:13px">${c.label}</span>
+        ${c.monthly?'<span class="monthly-badge">🔄</span>':''}
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-weight:700;font-size:13px">${fmt(c.amount)}</span>
+        <button onclick="deleteCharge(${c.id})" style="border:none;background:none;cursor:pointer;color:var(--light)">✕</button>
+      </div>
+    </div>`).join('') || '<p style="color:var(--light);font-size:13px">Aucune charge fixe</p>';
+
+  const ct = document.getElementById('charges-total');
+  if (ct) ct.innerHTML = `<div class="flex-between"><span style="font-weight:600;font-size:13px">Total charges fixes</span><span style="font-weight:700;color:var(--danger)">${fmt(totalCharges)}</span></div>`;
+
+  // ── DÉPENSES DU MOIS ──
+  const monthExpenses = (currentFamily.expenses || []).filter(e => {
+    const d = new Date(e.date);
+    return d.getMonth() === selectedMonth && d.getFullYear() === year;
+  });
+  const totalExp = monthExpenses.reduce((s, e) => s + (parseFloat(e.amount)||0), 0);
+  const el2 = document.getElementById('expenses-list');
+  if (el2) el2.innerHTML = monthExpenses.slice().reverse().map(e => `
+    <div class="expense-row">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="expense-cat" style="background:var(--cream)">${e.category?.split(' ')[0]||'💳'}</div>
+        <div>
+          <div style="font-weight:600;font-size:13px">${e.label}</div>
+          <div style="font-size:12px;color:var(--light)">${formatDate(e.date)} — ${e.by}</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-weight:700;color:var(--terracotta)">${fmt(e.amount)}</span>
+        <button onclick="deleteExpense(${e.id})" style="border:none;background:none;cursor:pointer;color:var(--light)">✕</button>
+      </div>
+    </div>`).join('') || '<p style="color:var(--light);font-size:13px">Aucune dépense ce mois</p>';
+
+  // ── ÉTAT FINANCIER ──
+  const totalSorties  = totalCharges + totalExp;
+  const disponible    = totalIncome - totalSorties;
+  const tauxEpargne   = totalIncome > 0 ? Math.round((disponible / totalIncome) * 100) : 0;
+  const tauxEndettement = totalIncome > 0 ? Math.round((totalCharges / totalIncome) * 100) : 0;
+
+  const bs = document.getElementById('budget-summary');
+  if (bs) bs.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+      <div style="background:#F0FDF4;padding:12px;border-radius:10px">
+        <div style="font-size:11px;color:var(--light);margin-bottom:3px">REVENUS</div>
+        <div style="font-size:18px;font-weight:700;color:var(--success)">${fmt(totalIncome)}</div>
+      </div>
+      <div style="background:#FEF2F2;padding:12px;border-radius:10px">
+        <div style="font-size:11px;color:var(--light);margin-bottom:3px">SORTIES</div>
+        <div style="font-size:18px;font-weight:700;color:var(--danger)">${fmt(totalSorties)}</div>
+      </div>
+      <div style="background:${disponible>=0?'rgba(76,29,149,0.08)':'#FEF2F2'};padding:12px;border-radius:10px;grid-column:span 2">
+        <div style="font-size:11px;color:var(--light);margin-bottom:3px">DISPONIBLE</div>
+        <div style="font-size:24px;font-weight:700;color:${disponible>=0?'var(--forest)':'var(--danger)'}">${fmt(disponible)}</div>
+      </div>
+    </div>
+    <div style="font-size:13px;margin-bottom:8px">
+      <div class="flex-between mb-8"><span>Taux d'endettement</span><span style="font-weight:700;color:${tauxEndettement>33?'var(--danger)':tauxEndettement>20?'var(--warning)':'var(--success)'}">${tauxEndettement}%</span></div>
+      <div class="progress-bar mb-8"><div class="progress-fill" style="width:${Math.min(100,tauxEndettement)}%;background:${tauxEndettement>33?'var(--danger)':tauxEndettement>20?'var(--warning)':'var(--success)'}"></div></div>
+      <div class="flex-between"><span>Taux d'épargne potentiel</span><span style="font-weight:700;color:${tauxEpargne>20?'var(--success)':tauxEpargne>10?'var(--warning)':'var(--danger)'}">${tauxEpargne}%</span></div>
+    </div>`;
+
+  // ── FINANCE STATS ──
+  const fs = document.getElementById('finance-stats');
+  if (fs) fs.innerHTML = `
+    <div class="stat-card" style="border-left-color:var(--success)"><div class="stat-icon" style="background:rgba(39,174,96,0.12)">💰</div><div class="stat-info"><div class="label">Revenus/mois</div><div class="value">${fmt(totalIncome)}</div></div></div>
+    <div class="stat-card" style="border-left-color:var(--danger)"><div class="stat-icon" style="background:rgba(192,57,43,0.12)">🔄</div><div class="stat-info"><div class="label">Charges fixes</div><div class="value">${fmt(totalCharges)}</div></div></div>
+    <div class="stat-card" style="border-left-color:var(--terracotta)"><div class="stat-icon" style="background:rgba(196,113,74,0.12)">💳</div><div class="stat-info"><div class="label">Dépenses mois</div><div class="value">${fmt(totalExp)}</div></div></div>
+    <div class="stat-card" style="border-left-color:${disponible>=0?'var(--forest)':'var(--danger)'}"><div class="stat-icon" style="background:rgba(76,29,149,0.12)">🏦</div><div class="stat-info"><div class="label">Disponible</div><div class="value" style="color:${disponible>=0?'var(--success)':'var(--danger)'}">${fmt(disponible)}</div></div></div>`;
+
+  // ── CONSEILS FINANCIERS ──
+  const fa = document.getElementById('finance-advice');
+  if (fa) {
+    let advice = '';
+    let icon   = '';
+    let color  = '';
+    if (totalIncome === 0) {
+      advice = '💡 Ajoutez vos revenus dans votre profil ou via le bouton "+ Revenu" pour obtenir une analyse financière complète.';
+      icon   = '📊'; color = 'var(--info)';
+    } else if (disponible < 0) {
+      advice = `🚨 Attention ! Vos sorties (${fmt(totalSorties)}) dépassent vos revenus (${fmt(totalIncome)}). Réduisez vos charges ou augmentez vos revenus rapidement.`;
+      icon   = '🚨'; color = 'var(--danger)';
+    } else if (tauxEpargne < 10) {
+      advice = `⚠️ Votre taux d'épargne est faible (${tauxEpargne}%). Essayez d'économiser au moins 10% de vos revenus, soit ${fmt(totalIncome * 0.1)}/mois. Identifiez les dépenses non essentielles à réduire.`;
+      icon   = '⚠️'; color = 'var(--warning)';
+    } else if (tauxEpargne < 20) {
+      advice = `✅ Bonne gestion ! Vous épargnez ${tauxEpargne}% de vos revenus (${fmt(disponible)}/mois). Continuez ainsi et envisagez d'investir une partie de cette épargne.`;
+      icon   = '✅'; color = 'var(--success)';
+    } else {
+      advice = `🌟 Excellent ! Votre taux d'épargne de ${tauxEpargne}% est très bon. Vous avez ${fmt(disponible)}/mois de disponible. Pensez à constituer une épargne de précaution de 3-6 mois de charges (${fmt(totalCharges*3)} à ${fmt(totalCharges*6)}).`;
+      icon   = '🌟'; color = 'var(--forest)';
+    }
+    if (tauxEndettement > 33 && totalIncome > 0) {
+      advice += ` | ⚠️ Taux d'endettement élevé (${tauxEndettement}% > 33%). Difficile d'obtenir un crédit dans ces conditions.`;
+    }
+    fa.innerHTML = `<div style="display:flex;gap:12px;align-items:flex-start"><div style="font-size:24px">${icon}</div><div style="font-size:13px;line-height:1.6;color:var(--dark)">${advice}</div></div>`;
+    fa.style.borderLeftColor = color;
+  }
+
+  // ── RÉPARTITION PAR CATÉGORIE ──
+  const eb = document.getElementById('expense-breakdown');
+  if (eb && monthExpenses.length) {
+    const byCat = {};
+    monthExpenses.forEach(e => {
+      const cat = e.category || '⭐ Autre';
+      if (!byCat[cat]) byCat[cat] = 0;
+      byCat[cat] += parseFloat(e.amount)||0;
+    });
+    const sorted = Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
+    eb.innerHTML = sorted.map(([cat, amount]) => {
+      const pct = totalExp > 0 ? Math.round(amount/totalExp*100) : 0;
+      return `<div style="margin-bottom:10px">
+        <div class="flex-between mb-4" style="font-size:13px">
+          <span>${cat}</span>
+          <span style="font-weight:700">${fmt(amount)} (${pct}%)</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:var(--forest)"></div></div>
+      </div>`;
+    }).join('');
+  } else if (eb) {
+    eb.innerHTML = '<p style="color:var(--light);font-size:13px">Aucune dépense ce mois</p>';
+  }
+}
+
+// ── REVENU FUNCTIONS ──
+function openRevenuModal() {
+  populateDropdowns();
+  const rm = document.getElementById('rev-membre');
+  if (rm) {
+    rm.innerHTML = (currentFamily.members||[]).map(m=>`<option value="${m.firstname}">${m.firstname} ${m.lastname}</option>`).join('');
+  }
+  const rd = document.getElementById('rev-date');
+  if (rd) rd.value = todayStr();
+  openModal('modal-revenu');
+}
+
+function saveRevenu() {
+  const r = {
+    id:       Date.now(),
+    type:     document.getElementById('rev-type')?.value || 'salaire',
+    membre:   document.getElementById('rev-membre')?.value || '',
+    montant:  parseFloat(document.getElementById('rev-montant')?.value) || 0,
+    date:     document.getElementById('rev-date')?.value || todayStr(),
+    recurrence: document.getElementById('rev-recurrence')?.value || 'mensuel',
+    notes:    document.getElementById('rev-notes')?.value || ''
+  };
+  if (!r.montant) { showToast('Montant requis', 'error'); return; }
+  if (!currentFamily.revenus) currentFamily.revenus = [];
+  currentFamily.revenus.push(r);
+  saveToFirestore();
+  closeModal('modal-revenu');
+  renderExpenses();
+  showToast('Revenu enregistré !', 'success');
+}
+
+// ══ DETECT LANGUAGE ON LOAD ══
+detectLanguageFromIP();
+
+// ══ USER MENU ══
 function toggleUserMenu() {
   const d = document.getElementById('user-dropdown');
   const lw = document.getElementById('lang-dropdown');
@@ -4057,7 +4633,6 @@ const LANGS = {
   de:{flag:'🇩🇪',code:'DE',label:'Deutsch'},
   nl:{flag:'🇳🇱',code:'NL',label:'Nederlands'}
 };
-let currentLang = 'fr';
 
 function toggleLangPicker() {
   const d = document.getElementById('lang-dropdown');
@@ -5005,6 +5580,65 @@ function adminSendTestEmail() {
 }
 
 // Log activity helper
+// ══ PLATFORM STATS (superadmin) ══
+async function loadPlatformStats() {
+  const loading = document.getElementById('platform-stats-loading');
+  const stats   = document.getElementById('platform-stats');
+  if (loading) loading.innerHTML = '⏳ Chargement des statistiques…';
+  if (stats)   stats.style.display = 'none';
+  try {
+    const usersSnap    = await db.collection('users').get();
+    const familiesSnap = await db.collection('families').get();
+    const users    = usersSnap.docs.map(d => ({ id:d.id, ...d.data() }));
+    const families = familiesSnap.docs.map(d => ({ id:d.id, ...d.data() }));
+    const byCountry = {};
+    users.forEach(u => { const c=u.country||'?'; byCountry[c]=(byCountry[c]||0)+1; });
+    const activeFamilies = families.filter(f => (f.members||[]).length > 0);
+    const countryFlags = {
+      FR:'🇫🇷 France',SE:'🇸🇪 Suède',DZ:'🇩🇿 Algérie',MA:'🇲🇦 Maroc',
+      TN:'🇹🇳 Tunisie',BE:'🇧🇪 Belgique',CH:'🇨🇭 Suisse',CA:'🇨🇦 Canada',
+      GB:'🇬🇧 UK',US:'🇺🇸 USA',DE:'🇩🇪 Allemagne',ES:'🇪🇸 Espagne',
+      NL:'🇳🇱 Pays-Bas',SA:'🇸🇦 Arabie S.',AE:'🇦🇪 Émirats'
+    };
+    const pc = document.getElementById('platform-counters');
+    if (pc) pc.innerHTML = `
+      <div class="stat-card" style="border-left-color:var(--forest)"><div class="stat-icon" style="background:rgba(76,29,149,0.12)">👥</div><div class="stat-info"><div class="label">Utilisateurs</div><div class="value">${users.length}</div></div></div>
+      <div class="stat-card" style="border-left-color:var(--success)"><div class="stat-icon" style="background:rgba(39,174,96,0.12)">🏠</div><div class="stat-info"><div class="label">Familles actives</div><div class="value">${activeFamilies.length}</div></div></div>
+      <div class="stat-card" style="border-left-color:var(--info)"><div class="stat-icon" style="background:rgba(37,99,235,0.12)">🌍</div><div class="stat-info"><div class="label">Pays</div><div class="value">${Object.keys(byCountry).length}</div></div></div>
+      <div class="stat-card" style="border-left-color:var(--warning)"><div class="stat-icon" style="background:rgba(217,119,6,0.12)">👤</div><div class="stat-info"><div class="label">Moy. membres</div><div class="value">${activeFamilies.length?(users.length/activeFamilies.length).toFixed(1):0}</div></div></div>`;
+    const pbc = document.getElementById('platform-by-country');
+    if (pbc) {
+      const sorted = Object.entries(byCountry).sort((a,b)=>b[1]-a[1]);
+      const maxVal = sorted[0]?.[1]||1;
+      pbc.innerHTML = sorted.map(([code,count])=>`
+        <div style="margin-bottom:10px">
+          <div class="flex-between mb-4" style="font-size:13px"><span>${countryFlags[code]||'🌍 '+code}</span><span style="font-weight:700">${count} utilisateur${count>1?'s':''}</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${Math.round(count/maxVal*100)}%;background:var(--forest)"></div></div>
+        </div>`).join('')||'<p style="color:var(--light);font-size:13px">Aucune donnée</p>';
+    }
+    const pr = document.getElementById('platform-recent');
+    if (pr) {
+      pr.innerHTML = users.slice(-10).reverse().map(u=>`
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--cream)">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;flex-shrink:0">${(u.firstname?.[0]||'?')}${(u.lastname?.[0]||'')}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:600;font-size:13px">${u.firstname||''} ${u.lastname||''}</div>
+            <div style="font-size:11px;color:var(--light);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${u.email||''}</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <span class="tag tag-neutral" style="font-size:10px">${countryFlags[u.country]?.split(' ')[0]||'🌍'} ${u.country||'?'}</span>
+            <div style="font-size:10px;color:var(--light);margin-top:2px">${u.role||''}</div>
+          </div>
+        </div>`).join('')||'<p style="color:var(--light);font-size:13px">Aucun utilisateur</p>';
+    }
+    if (loading) loading.style.display='none';
+    if (stats)   stats.style.display='block';
+  } catch(e) {
+    if (loading) loading.innerHTML=`❌ Erreur: ${e.message}`;
+    console.error('Platform stats error:',e);
+  }
+}
+
 function logActivity(icon, msg) {
   if (!currentFamily) return;
   if (!currentFamily.activityLog) currentFamily.activityLog = [];
