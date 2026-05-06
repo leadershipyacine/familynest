@@ -445,11 +445,17 @@ hr.divider-line{border:none;border-top:1px solid var(--warm);margin:14px 0;}
         <label for="remember-me">Mémoriser mon email</label>
       </div>
       <button class="auth-btn-primary" onclick="handleLogin()">🔑 Connexion</button>
-      <div class="auth-divider">ou</div>
-      <button class="bankid-btn" onclick="loginWithBankID()">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><rect width="24" height="24" rx="4" fill="transparent"/><text y="18" font-size="14" font-weight="bold" fill="white">BID</text></svg>
-        Logga in med BankID
-      </button>
+      <div class="auth-divider">ou continuer avec</div>
+      <div style="display:flex;gap:10px;margin-bottom:10px">
+        <button onclick="loginWithGoogle()" style="flex:1;padding:12px;background:white;border:2px solid var(--warm);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;color:var(--dark)" onmouseover="this.style.borderColor='#4285f4'" onmouseout="this.style.borderColor='var(--warm)'">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Google
+        </button>
+        <button onclick="loginWithMicrosoft()" style="flex:1;padding:12px;background:white;border:2px solid var(--warm);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;color:var(--dark)" onmouseover="this.style.borderColor='#0078d4'" onmouseout="this.style.borderColor='var(--warm)'">
+          <svg width="18" height="18" viewBox="0 0 24 24"><rect x="1" y="1" width="10.5" height="10.5" fill="#f25022"/><rect x="12.5" y="1" width="10.5" height="10.5" fill="#7fba00"/><rect x="1" y="12.5" width="10.5" height="10.5" fill="#00a4ef"/><rect x="12.5" y="12.5" width="10.5" height="10.5" fill="#ffb900"/></svg>
+          Microsoft
+        </button>
+      </div>
       <div class="auth-divider">pas encore de compte ?</div>
       <button class="auth-btn-secondary" onclick="switchAuthTab('register')">🏡 Créer une famille</button>
       <button class="auth-btn-secondary" onclick="switchAuthTab('join')" style="margin-top:8px">🔗 Rejoindre ma famille</button>
@@ -519,6 +525,17 @@ hr.divider-line{border:none;border-top:1px solid var(--warm);margin:14px 0;}
       </div>
       <div class="auth-info-box">ℹ️ Un <strong>code famille unique</strong> sera créé. Partagez-le avec les autres membres pour qu'ils rejoignent votre foyer.</div>
       <button class="auth-btn-primary" onclick="handleRegister()">🏡 Créer ma famille</button>
+      <div class="auth-divider">ou créer avec</div>
+      <div style="display:flex;gap:10px;margin-bottom:10px">
+        <button onclick="registerWithGoogle()" style="flex:1;padding:11px;background:white;border:2px solid var(--warm);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;color:var(--dark)">
+          <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Google
+        </button>
+        <button onclick="registerWithMicrosoft()" style="flex:1;padding:11px;background:white;border:2px solid var(--warm);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;color:var(--dark)">
+          <svg width="16" height="16" viewBox="0 0 24 24"><rect x="1" y="1" width="10.5" height="10.5" fill="#f25022"/><rect x="12.5" y="1" width="10.5" height="10.5" fill="#7fba00"/><rect x="1" y="12.5" width="10.5" height="10.5" fill="#00a4ef"/><rect x="12.5" y="12.5" width="10.5" height="10.5" fill="#ffb900"/></svg>
+          Microsoft
+        </button>
+      </div>
       <div class="auth-divider">déjà un compte ?</div>
       <button class="auth-btn-secondary" onclick="switchAuthTab('login')">Se connecter</button>
     </div>
@@ -648,6 +665,7 @@ hr.divider-line{border:none;border-top:1px solid var(--warm);margin:14px 0;}
       <h2 id="page-title">Tableau de bord</h2>
       <div class="topbar-actions">
         <span id="topbar-date" style="font-size:12px;color:var(--light);"></span>
+
         <!-- LANGUAGE PICKER -->
         <div style="position:relative;" id="lang-picker-wrap">
           <button onclick="toggleLangPicker()" style="font-size:13px;font-weight:700;color:var(--forest);background:rgba(76,29,149,0.1);padding:5px 14px;border-radius:20px;border:none;cursor:pointer;display:flex;align-items:center;gap:6px;">
@@ -657,12 +675,39 @@ hr.divider-line{border:none;border-top:1px solid var(--warm);margin:14px 0;}
             <div style="font-size:11px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:0.6px;padding:4px 8px 8px;">Langue / Language</div>
             <div class="curr-pick-item" onclick="setLanguage('fr','🇫🇷','FR','Français')">🇫🇷 &nbsp; Français</div>
             <div class="curr-pick-item" onclick="setLanguage('en','🇬🇧','EN','English')">🇬🇧 &nbsp; English</div>
+            <div class="curr-pick-item" onclick="setLanguage('sv','🇸🇪','SV','Svenska')">🇸🇪 &nbsp; Svenska</div>
             <div class="curr-pick-item" onclick="setLanguage('ar','🇩🇿','AR','العربية')">🇩🇿 &nbsp; العربية</div>
             <div class="curr-pick-item" onclick="setLanguage('es','🇪🇸','ES','Español')">🇪🇸 &nbsp; Español</div>
             <div class="curr-pick-item" onclick="setLanguage('de','🇩🇪','DE','Deutsch')">🇩🇪 &nbsp; Deutsch</div>
-            <div class="curr-pick-item" onclick="setLanguage('nl','🇳🇱','NL','Nederlands')">🇳🇱 &nbsp; Nederlands</div>
           </div>
         </div>
+
+        <!-- USER AVATAR MENU -->
+        <div style="position:relative;" id="user-menu-wrap">
+          <button onclick="toggleUserMenu()" style="display:flex;align-items:center;gap:8px;background:var(--cream);border:2px solid var(--warm);border-radius:24px;padding:5px 12px 5px 5px;cursor:pointer;transition:all 0.2s;" id="user-menu-btn">
+            <div id="topbar-avatar" style="width:32px;height:32px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;overflow:hidden;flex-shrink:0;">
+              <img id="topbar-avatar-img" src="" style="width:100%;height:100%;object-fit:cover;display:none">
+              <span id="topbar-avatar-initials">?</span>
+            </div>
+            <div style="text-align:left;line-height:1.2">
+              <div id="topbar-user-name" style="font-size:13px;font-weight:700;color:var(--dark)">Chargement…</div>
+              <div id="topbar-user-role" style="font-size:11px;color:var(--light)"></div>
+            </div>
+            <span style="font-size:10px;color:var(--light);margin-left:2px">▼</span>
+          </button>
+          <div id="user-dropdown" style="display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--white);border-radius:14px;box-shadow:var(--shadow-lg);padding:8px;min-width:200px;z-index:200;border:1px solid var(--warm);">
+            <div style="padding:10px 12px;border-bottom:1px solid var(--cream);margin-bottom:6px">
+              <div style="font-weight:700;font-size:14px" id="dropdown-user-name"></div>
+              <div style="font-size:12px;color:var(--light)" id="dropdown-user-email"></div>
+            </div>
+            <div class="curr-pick-item" onclick="openMyProfile();toggleUserMenu()">👤 Mon profil</div>
+            <div class="curr-pick-item" onclick="showSection('parametres');toggleUserMenu()">⚙️ Paramètres</div>
+            <div style="border-top:1px solid var(--cream);margin-top:6px;padding-top:6px">
+              <div class="curr-pick-item" onclick="confirmLogout()" style="color:var(--danger)">🚪 Déconnexion</div>
+            </div>
+          </div>
+        </div>
+
         <button class="btn btn-primary btn-sm" onclick="openAddModal()">+ Ajouter</button>
       </div>
     </div>
@@ -1524,37 +1569,70 @@ hr.divider-line{border:none;border-top:1px solid var(--warm);margin:14px 0;}
 
 <!-- MY PROFILE MODAL (all users) -->
 <div class="modal-overlay" id="modal-my-profile">
-  <div class="modal">
+  <div class="modal" style="max-width:520px">
     <div class="modal-header"><div class="modal-title">👤 Mon profil</div><button class="close-btn" onclick="closeModal('modal-my-profile')">✕</button></div>
+
     <!-- Photo de profil -->
     <div class="profile-avatar-wrap" onclick="document.getElementById('profile-photo-input').click()">
       <img id="profile-avatar-display" src="" class="profile-avatar-img" style="display:none">
-      <div id="profile-avatar-placeholder" class="member-avatar-lg" style="width:90px;height:90px;font-size:32px;background:var(--forest);margin:0 auto"></div>
+      <div id="profile-avatar-placeholder" class="member-avatar-lg" style="width:90px;height:90px;font-size:32px;background:var(--forest);margin:0 auto;display:flex;align-items:center;justify-content:center;color:white;font-weight:700"></div>
       <div class="profile-avatar-edit">📷</div>
       <input type="file" id="profile-photo-input" accept="image/*" style="display:none" onchange="handleProfilePhoto(event)">
     </div>
-    <div style="text-align:center;font-size:12px;color:var(--light);margin-bottom:16px">Cliquer pour changer la photo</div>
+    <div style="text-align:center;font-size:12px;color:var(--light);margin-bottom:18px">Cliquer pour changer la photo</div>
+
+    <!-- Infos personnelles -->
+    <div style="font-size:12px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px">Informations personnelles</div>
     <div class="input-row">
-      <div class="form-group"><label>Prénom</label><input type="text" id="profile-firstname"></div>
-      <div class="form-group"><label>Nom</label><input type="text" id="profile-lastname"></div>
+      <div class="form-group"><label>Prénom</label><input type="text" id="profile-firstname" placeholder="Jean"></div>
+      <div class="form-group"><label>Nom</label><input type="text" id="profile-lastname" placeholder="Dupont"></div>
     </div>
     <div class="input-row">
       <div class="form-group"><label>Date de naissance</label><input type="date" id="profile-dob"></div>
-      <div class="form-group"><label>Téléphone</label><input type="tel" id="profile-phone"></div>
+      <div class="form-group"><label>Téléphone</label><input type="tel" id="profile-phone" placeholder="+33 6 00 00 00 00"></div>
     </div>
-    <div class="form-group"><label>Adresse</label><input type="text" id="profile-address"></div>
+    <div class="form-group"><label>Adresse</label><input type="text" id="profile-address" placeholder="12 rue des Acacias..."></div>
     <div class="input-row">
-      <div class="form-group"><label>Groupe sanguin</label><select id="profile-blood"><option value="">—</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
-      <div class="form-group"><label>Langue de l'interface</label><select id="profile-lang">
-        <option value="fr">🇫🇷 Français</option><option value="en">🇬🇧 English</option>
-        <option value="ar">🇩🇿 العربية</option><option value="sv">🇸🇪 Svenska</option>
-        <option value="es">🇪🇸 Español</option><option value="de">🇩🇪 Deutsch</option>
-      </select></div>
+      <div class="form-group"><label>Groupe sanguin</label>
+        <select id="profile-blood"><option value="">—</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select>
+      </div>
+      <div class="form-group"><label>Langue de l'interface</label>
+        <select id="profile-lang" onchange="setLanguageFromProfile(this.value)">
+          <option value="fr">🇫🇷 Français</option>
+          <option value="en">🇬🇧 English</option>
+          <option value="sv">🇸🇪 Svenska</option>
+          <option value="ar">🇩🇿 العربية</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="de">🇩🇪 Deutsch</option>
+        </select>
+      </div>
     </div>
+
+    <!-- Salaire (parents admins) -->
+    <div id="profile-salary-section" style="display:none">
+      <hr class="divider-line">
+      <div style="font-size:12px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px">💰 Revenus (privé)</div>
+      <div class="input-row">
+        <div class="form-group">
+          <label>Salaire net mensuel (<span class="curr-sym">€</span>)</label>
+          <input type="number" id="profile-salary" placeholder="2500" min="0">
+        </div>
+        <div class="form-group">
+          <label>Autres revenus (<span class="curr-sym">€</span>)</label>
+          <input type="number" id="profile-other-income" placeholder="0" min="0">
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--light);margin-top:-6px;margin-bottom:12px">🔒 Ces informations sont privées et visibles uniquement par vous et les admins</div>
+    </div>
+
+    <!-- Mot de passe -->
     <hr class="divider-line">
-    <div style="font-size:13px;font-weight:700;color:var(--mid);margin-bottom:10px">🔒 Changer le mot de passe</div>
-    <div class="form-group"><label>Nouveau mot de passe</label><input type="password" id="profile-newpw" placeholder="Laisser vide pour ne pas changer"></div>
-    <div class="form-group"><label>Confirmer le mot de passe</label><input type="password" id="profile-confirmpw" placeholder="Confirmer le nouveau mot de passe"></div>
+    <div style="font-size:12px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px">🔒 Changer le mot de passe</div>
+    <div class="input-row">
+      <div class="form-group"><label>Nouveau mot de passe</label><input type="password" id="profile-newpw" placeholder="Laisser vide = pas de changement"></div>
+      <div class="form-group"><label>Confirmer</label><input type="password" id="profile-confirmpw" placeholder="Confirmer le mot de passe"></div>
+    </div>
+
     <button class="btn btn-primary" onclick="saveMyProfile()">💾 Enregistrer mon profil</button>
   </div>
 </div>
@@ -3065,7 +3143,7 @@ function renderMembers() {
     // Use index instead of id to avoid special chars issues
     return `
     <div class="member-card" style="opacity:${isBlocked?0.6:1};${isBlocked?'border:2px solid var(--danger)':''}">
-      <div class="member-avatar-lg" style="background:${m.color||'#4C1D95'}">${m.firstname[0]}${m.lastname?.[0]||''}</div>
+      <div class="member-avatar-lg" style="background:${m.color||'#4C1D95'};overflow:hidden;display:flex;align-items:center;justify-content:center">${m.photo ? `<img src="${m.photo}" style="width:100%;height:100%;object-fit:cover">` : m.firstname[0]+(m.lastname?.[0]||'')}</div>
       <div class="member-name">${m.firstname} ${m.lastname} ${isMe?'<span style="font-size:11px;color:var(--light)">(Moi)</span>':''}</div>
       <div class="member-role" style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">
         ${m.role}
@@ -3077,10 +3155,13 @@ function renderMembers() {
       ${m.phone?`<div style="font-size:12px;margin-top:4px">📱 ${m.phone}</div>`:''}
       ${m.email?`<div style="font-size:12px">✉️ ${m.email}</div>`:''}
       ${!isMe && admin ? `
-        <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap">
-          <button data-action="edit" data-idx="${idx}" class="btn btn-secondary btn-xs" style="flex:1">✏️ Modifier</button>
-          <button data-action="block" data-idx="${idx}" class="btn btn-xs" style="flex:1;background:${isBlocked?'#27AE60':'#E67E22'};color:white;border:none;cursor:pointer;border-radius:6px;padding:5px 8px;font-size:11px;font-weight:600">${isBlocked?'✅ Débloquer':'🚫 Bloquer'}</button>
-          <button data-action="delete" data-idx="${idx}" class="btn btn-danger btn-xs" style="flex:1">🗑 Retirer</button>
+        <div style="margin-top:8px">
+          ${m.salary ? '<div style="font-size:12px;color:var(--success);margin-bottom:8px">💰 ' + fmt(m.salary) + '/mois' + (m.otherIncome ? ' + ' + fmt(m.otherIncome) : '') + '</div>' : ''}
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button data-action="edit" data-idx="${idx}" class="btn btn-secondary btn-xs" style="flex:1">✏️ Modifier</button>
+            <button data-action="block" data-idx="${idx}" class="btn btn-xs" style="flex:1;background:${isBlocked?'#27AE60':'#E67E22'};color:white;border:none;cursor:pointer;border-radius:6px;padding:5px 8px;font-size:11px;font-weight:600">${isBlocked?'✅ Débloquer':'🚫 Bloquer'}</button>
+            <button data-action="delete" data-idx="${idx}" class="btn btn-danger btn-xs" style="flex:1">🗑 Retirer</button>
+          </div>
         </div>` : ''}
       ${!isMe && !admin ? '<div style="font-size:11px;color:var(--light);margin-top:8px">👑 Seuls les admins peuvent gérer</div>' : ''}
       ${isMe ? '<div style="font-size:11px;color:var(--light);margin-top:8px">👤 C\'est vous — <a href="#" onclick="openMyProfile();return false;" style="color:var(--forest)">Modifier mon profil</a></div>' : ''}
@@ -3659,7 +3740,315 @@ function toggleNotifDoc(type){
   const w=document.getElementById('notif-'+type+'-wrap');if(w)w.classList.toggle('active',docNotifs[type]);
 }
 
-// ══ LANGUAGE PICKER ══
+// ══ USER MENU (topbar) ══
+function toggleUserMenu() {
+  const d = document.getElementById('user-dropdown');
+  const lw = document.getElementById('lang-dropdown');
+  if (lw) lw.style.display = 'none';
+  if (d) d.style.display = d.style.display === 'none' ? 'block' : 'none';
+}
+
+function updateTopbarUser() {
+  if (!currentUser || !currentFamily) return;
+  const me = (currentFamily.members || []).find(m =>
+    String(m.id) === String(currentUser.uid) || m.email === currentUser.email
+  );
+  const firstname = me?.firstname || currentUser.firstname || '';
+  const lastname  = me?.lastname  || currentUser.lastname  || '';
+  const role      = me?.role      || currentUser.role      || '';
+  const photo     = me?.photo     || '';
+
+  // Topbar name & role
+  const nameEl = document.getElementById('topbar-user-name');
+  const roleEl = document.getElementById('topbar-user-role');
+  const initEl = document.getElementById('topbar-avatar-initials');
+  const imgEl  = document.getElementById('topbar-avatar-img');
+  const dnEl   = document.getElementById('dropdown-user-name');
+  const deEl   = document.getElementById('dropdown-user-email');
+
+  if (nameEl) nameEl.textContent = firstname + (lastname ? ' ' + lastname : '');
+  if (roleEl) roleEl.textContent = role;
+  if (initEl) initEl.textContent = (firstname[0]||'') + (lastname[0]||'');
+  if (dnEl)   dnEl.textContent   = firstname + ' ' + lastname;
+  if (deEl)   deEl.textContent   = currentUser.email || '';
+
+  if (photo && imgEl) {
+    imgEl.src = photo;
+    imgEl.style.display = 'block';
+    if (initEl) initEl.style.display = 'none';
+  } else if (imgEl) {
+    imgEl.style.display = 'none';
+    if (initEl) initEl.style.display = 'block';
+  }
+}
+
+// Close menus on outside click
+document.addEventListener('click', function(e) {
+  const uw = document.getElementById('user-menu-wrap');
+  if (uw && !uw.contains(e.target)) {
+    const d = document.getElementById('user-dropdown');
+    if (d) d.style.display = 'none';
+  }
+  const lw = document.getElementById('lang-picker-wrap');
+  if (lw && !lw.contains(e.target)) {
+    const d = document.getElementById('lang-dropdown');
+    if (d) d.style.display = 'none';
+  }
+});
+
+// ══ IMPROVED openMyProfile ══
+function openMyProfile() {
+  const me = (currentFamily.members || []).find(m =>
+    String(m.id) === String(currentUser.uid) || m.email === currentUser.email
+  );
+
+  // Fill fields
+  if (me) {
+    document.getElementById('profile-firstname').value = me.firstname || '';
+    document.getElementById('profile-lastname').value  = me.lastname  || '';
+    document.getElementById('profile-dob').value       = me.dob       || '';
+    document.getElementById('profile-phone').value     = me.phone     || '';
+    document.getElementById('profile-address').value   = me.address   || '';
+    document.getElementById('profile-blood').value     = me.blood     || '';
+    // Salary (admins only)
+    if (isAdmin()) {
+      const salarySection = document.getElementById('profile-salary-section');
+      if (salarySection) salarySection.style.display = 'block';
+      const salaryEl = document.getElementById('profile-salary');
+      const otherEl  = document.getElementById('profile-other-income');
+      if (salaryEl) salaryEl.value = me.salary || '';
+      if (otherEl)  otherEl.value  = me.otherIncome || '';
+    }
+    // Photo
+    const img = document.getElementById('profile-avatar-display');
+    const ph  = document.getElementById('profile-avatar-placeholder');
+    if (me.photo) {
+      if (img) { img.src = me.photo; img.style.display = 'block'; }
+      if (ph)  ph.style.display = 'none';
+    } else {
+      if (img) img.style.display = 'none';
+      if (ph)  {
+        ph.style.display = 'flex';
+        ph.textContent = (me.firstname?.[0] || '') + (me.lastname?.[0] || '');
+      }
+    }
+  }
+
+  document.getElementById('profile-lang').value = currentUser.lang || 'fr';
+  document.getElementById('profile-newpw').value     = '';
+  document.getElementById('profile-confirmpw').value = '';
+
+  openModal('modal-my-profile');
+}
+
+// ══ IMPROVED saveMyProfile ══
+function saveMyProfile() {
+  const newpw     = document.getElementById('profile-newpw').value;
+  const confirmpw = document.getElementById('profile-confirmpw').value;
+  if (newpw && newpw !== confirmpw) { showToast('Les mots de passe ne correspondent pas', 'error'); return; }
+  if (newpw && newpw.length < 6)    { showToast('Mot de passe : 6 caractères minimum', 'error'); return; }
+
+  const me = (currentFamily.members || []).find(m =>
+    String(m.id) === String(currentUser.uid) || m.email === currentUser.email
+  );
+
+  if (me) {
+    me.firstname = document.getElementById('profile-firstname').value.trim() || me.firstname;
+    me.lastname  = document.getElementById('profile-lastname').value.trim()  || me.lastname;
+    me.dob       = document.getElementById('profile-dob').value       || me.dob;
+    me.phone     = document.getElementById('profile-phone').value     || me.phone;
+    me.address   = document.getElementById('profile-address').value   || me.address;
+    me.blood     = document.getElementById('profile-blood').value;
+    // Salary
+    const salaryVal = document.getElementById('profile-salary')?.value;
+    const otherVal  = document.getElementById('profile-other-income')?.value;
+    if (salaryVal !== undefined) me.salary      = parseFloat(salaryVal) || 0;
+    if (otherVal  !== undefined) me.otherIncome = parseFloat(otherVal)  || 0;
+    // Photo temp
+    if (currentUser._tempPhoto) {
+      me.photo = currentUser._tempPhoto;
+      delete currentUser._tempPhoto;
+    }
+  }
+
+  // Update lang
+  const newLang = document.getElementById('profile-lang').value;
+  currentUser.lang = newLang;
+
+  // Update Firestore user doc
+  db.collection('users').doc(currentUser.uid).update({
+    firstname: me?.firstname || currentUser.firstname,
+    lastname:  me?.lastname  || currentUser.lastname,
+    lang:      newLang
+  }).catch(e => console.error('Update user:', e));
+
+  // Change password
+  if (newpw) {
+    auth.currentUser.updatePassword(newpw)
+      .then(() => showToast('Mot de passe mis à jour ✓', 'success'))
+      .catch(e => {
+        if (e.code === 'auth/requires-recent-login') {
+          showToast('Reconnectez-vous pour changer le mot de passe', 'error');
+        } else showToast(e.message, 'error');
+      });
+  }
+
+  saveToFirestore();
+  closeModal('modal-my-profile');
+  updateSidebar();
+  updateTopbarUser();
+  showToast('Profil mis à jour ! ✅', 'success');
+}
+
+function setLanguageFromProfile(lang) {
+  const langMap = {
+    fr:{ flag:'🇫🇷', code:'FR' },
+    en:{ flag:'🇬🇧', code:'EN' },
+    sv:{ flag:'🇸🇪', code:'SV' },
+    ar:{ flag:'🇩🇿', code:'AR' },
+    es:{ flag:'🇪🇸', code:'ES' },
+    de:{ flag:'🇩🇪', code:'DE' }
+  };
+  const l = langMap[lang];
+  if (l) {
+    const lf = document.getElementById('lang-flag');
+    const ll = document.getElementById('lang-label');
+    if (lf) lf.textContent = l.flag;
+    if (ll) ll.textContent = l.code;
+  }
+}
+
+// ══ PHOTO HANDLER ══
+function handleProfilePhoto(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (file.size > 2*1024*1024) { showToast('Photo trop grande (max 2MB)', 'error'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const b64 = e.target.result;
+    const img = document.getElementById('profile-avatar-display');
+    const ph  = document.getElementById('profile-avatar-placeholder');
+    if (img) { img.src = b64; img.style.display = 'block'; }
+    if (ph)  ph.style.display = 'none';
+    currentUser._tempPhoto = b64;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ══ EXTEND updateSidebar to also update topbar ══
+const _origUpdateSidebar = updateSidebar;
+updateSidebar = function() {
+  _origUpdateSidebar();
+  updateTopbarUser();
+};
+
+// ══ MEMBER CARD — show salary total for admins ══
+function getFamilyTotalIncome() {
+  if (!isAdmin() || !currentFamily) return 0;
+  return (currentFamily.members || []).reduce((sum, m) => {
+    return sum + (parseFloat(m.salary)||0) + (parseFloat(m.otherIncome)||0);
+  }, 0);
+}
+
+// ══ GOOGLE & MICROSOFT SIGN-IN ══
+
+async function handleSocialAuth(provider, mode) {
+  showLoading('Connexion en cours…');
+  try {
+    const result = await auth.signInWithPopup(provider);
+    const user   = result.user;
+    const isNew  = result.additionalUserInfo?.isNewUser;
+
+    if (isNew || mode === 'register') {
+      // Nouveau compte — créer profil
+      const displayName = user.displayName || '';
+      const parts = displayName.split(' ');
+      const fn = parts[0] || 'Utilisateur';
+      const ln = parts.slice(1).join(' ') || '';
+      const code = 'FAM-' + new Date().getFullYear() + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
+
+      const familyData = {
+        name: 'Famille ' + (ln || fn), code,
+        country: 'FR', lang: 'fr', currency: 'EUR', currencySym: '€',
+        members: [{
+          id: user.uid, firstname: fn, lastname: ln,
+          role: 'Papa', email: user.email || '',
+          photo: user.photoURL || '', dob: '', phone: '',
+          address: '', ss: '', blood: '', color: randomColor(), status: 'active'
+        }],
+        pendingMembers: [],
+        events:[], expenses:[], charges:[], factures:[],
+        biens:[], docs:[], alerts:[], enfants:[], vacances:[],
+        courses:[], courseReminders:[], checklists:[], anniversaires:[],
+        repas:[], recettes:[], taches:[], medicaments:[], rdvMedicaux:[],
+        vaccinations:[], vehicules:[], entretiens:[], garanties:[],
+        compteurs:[], contrats:[], contacts:[],
+        budget:{ monthly:3000 }
+      };
+
+      await Promise.all([
+        db.collection('families').doc(code).set(familyData),
+        db.collection('users').doc(user.uid).set({
+          firstname: fn, lastname: ln, role: 'Papa',
+          email: user.email || '', familyCode: code,
+          country: 'FR', lang: 'fr', approved: true,
+          photo: user.photoURL || ''
+        })
+      ]);
+      showToast('Compte créé ! Bienvenue 🎉 Code famille : ' + code, 'success');
+
+    } else {
+      // Compte existant — vérifier s'il a une famille
+      const userDoc = await db.collection('users').doc(user.uid).get();
+      if (!userDoc.exists) {
+        // Premier login avec social — créer profil
+        await handleSocialAuth(provider, 'register');
+        return;
+      }
+    }
+    // onAuthStateChanged prendra le relais
+  } catch (e) {
+    hideLoading();
+    if (e.code === 'auth/popup-closed-by-user') return;
+    if (e.code === 'auth/popup-blocked') {
+      showToast('Popup bloqué — autorisez les popups pour ce site', 'error');
+    } else {
+      showToast(e.message || 'Erreur de connexion', 'error');
+    }
+  }
+}
+
+function loginWithGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope('email');
+  provider.addScope('profile');
+  handleSocialAuth(provider, 'login');
+}
+
+function loginWithMicrosoft() {
+  const provider = new firebase.auth.OAuthProvider('microsoft.com');
+  provider.addScope('email');
+  provider.addScope('profile');
+  provider.setCustomParameters({ tenant: 'common' });
+  handleSocialAuth(provider, 'login');
+}
+
+function registerWithGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope('email');
+  provider.addScope('profile');
+  handleSocialAuth(provider, 'register');
+}
+
+function registerWithMicrosoft() {
+  const provider = new firebase.auth.OAuthProvider('microsoft.com');
+  provider.addScope('email');
+  provider.addScope('profile');
+  provider.setCustomParameters({ tenant: 'common' });
+  handleSocialAuth(provider, 'register');
+}
+
+// ══ AUTO-CLOSE user menu ══
 const LANGS = {
   fr:{flag:'🇫🇷',code:'FR',label:'Français'},
   en:{flag:'🇬🇧',code:'EN',label:'English'},
