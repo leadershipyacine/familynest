@@ -2808,11 +2808,21 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ══ PERMISSIONS ══
-const ADMIN_ROLES  = ['Papa','Maman','Tuteur','Grand-père','Grand-mère'];
+const ADMIN_ROLES  = ['Papa','Maman','Tuteur','Grand-père','Grand-mère','Tutrice'];
 const CHILD_ROLES  = ['Enfant'];
 
 function isAdmin() {
-  return currentUser && ADMIN_ROLES.includes(currentUser.role);
+  if (!currentUser) return false;
+  // Check role from currentUser (from Firestore users doc)
+  if (ADMIN_ROLES.includes(currentUser.role)) return true;
+  // Also check role from family members array (more up to date)
+  if (currentFamily) {
+    const me = (currentFamily.members || []).find(m =>
+      String(m.id) === String(currentUser.uid) || m.email === currentUser.email
+    );
+    if (me && ADMIN_ROLES.includes(me.role)) return true;
+  }
+  return false;
 }
 function isChild() {
   return currentUser && CHILD_ROLES.includes(currentUser.role);
@@ -3022,10 +3032,18 @@ function deleteMember(memberId, memberName) {
 }
 
 function toggleBlockMember(memberId, name) {
-  if (!isAdmin()) return;
+  console.log('🔒 toggleBlockMember called', memberId, name);
+  console.log('🔒 currentUser:', currentUser?.role, currentUser?.email);
+  console.log('🔒 isAdmin():', isAdmin());
+  if (!isAdmin()) {
+    showToast('Accès admin requis — votre rôle: ' + (currentUser?.role || 'inconnu'), 'error');
+    return;
+  }
   const m = (currentFamily.members||[]).find(m=>String(m.id)===String(memberId));
-  if (!m) return;
+  console.log('🔒 member found:', m?.firstname, 'current status:', m?.status);
+  if (!m) { showToast('Membre introuvable', 'error'); return; }
   m.status = m.status === 'blocked' ? 'active' : 'blocked';
+  console.log('🔒 new status:', m.status);
   saveToFirestore();
   renderMembers();
   showToast(name + (m.status==='blocked' ? ' bloqué 🚫' : ' débloqué ✅'), 'success');
