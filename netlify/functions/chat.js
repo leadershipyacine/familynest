@@ -15,7 +15,7 @@ exports.handler = async (event, context) => {
     return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
-  const geminiKey   = process.env.GEMINI_API_KEY;
+  const geminiKey   = process.env.GeminiAPI;
   const anthropicKey = process.env.ANTHROPIC_API_KEY;
 
   try {
@@ -48,7 +48,7 @@ exports.handler = async (event, context) => {
 
     // ── Gemini (gratuit) ──
     if (!geminiKey) {
-      return { statusCode: 500, headers, body: JSON.stringify({ error: 'Ajoutez GEMINI_API_KEY dans les variables Netlify' }) };
+      return { statusCode: 500, headers, body: JSON.stringify({ error: 'Clé GeminiAPI manquante dans Netlify' }) };
     }
 
     // Convertir messages au format Gemini
@@ -109,4 +109,3 @@ exports.handler = async (event, context) => {
     return { statusCode: 500, headers, body: JSON.stringify({ error: 'Server error: ' + err.message }) };
   }
 };
-
