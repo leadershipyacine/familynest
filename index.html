@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="/icon-192.png">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="application-name" content="FamilyNest">
-<title>FamilyNest v2 — Votre foyer numérique</title>
+<title>FamilyNest — Build 2026-05-06-v3</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -2990,10 +2990,12 @@ function renderMembers() {
   const g=document.getElementById('members-grid');
   if(!g) return;
   const admin = isAdmin();
-  g.innerHTML=(currentFamily.members||[]).map(m=>{
+  console.log('renderMembers — isAdmin:', admin, 'role:', currentUser?.role);
+  g.innerHTML=(currentFamily.members||[]).map((m,idx)=>{
     const isMe = String(m.id)===String(currentUser.uid) || m.email===currentUser.email;
     const isBlocked = m.status === 'blocked';
     const isAdminRole = ADMIN_ROLES.includes(m.role);
+    // Use index instead of id to avoid special chars issues
     return `
     <div class="member-card" style="opacity:${isBlocked?0.6:1};${isBlocked?'border:2px solid var(--danger)':''}">
       <div class="member-avatar-lg" style="background:${m.color||'#4C1D95'}">${m.firstname[0]}${m.lastname?.[0]||''}</div>
@@ -3004,17 +3006,44 @@ function renderMembers() {
         ${isBlocked?'<span class="tag tag-danger" style="font-size:10px">🚫 Bloqué</span>':''}
       </div>
       ${m.dob?`<div style="font-size:12px;color:var(--light);margin:6px 0">🎂 ${formatDate(m.dob)} · ${calcAge(m.dob)} ans</div>`:''}
-      ${m.blood?`<span class="tag tag-danger" style="margin-bottom:6px;display:inline-block">🩸 ${m.blood}</span>`:'' }
+      ${m.blood?`<span class="tag tag-danger" style="margin-bottom:6px;display:inline-block">🩸 ${m.blood}</span>`:''}
       ${m.phone?`<div style="font-size:12px;margin-top:4px">📱 ${m.phone}</div>`:''}
       ${m.email?`<div style="font-size:12px">✉️ ${m.email}</div>`:''}
-      ${admin && !isMe ? `
+      ${!isMe && admin ? `
         <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap">
-          <button onclick="openEditMember('${m.id}')" class="btn btn-secondary btn-xs" style="flex:1">✏️ Modifier</button>
-          <button onclick="toggleBlockMember('${m.id}','${m.firstname}')" class="btn btn-xs" style="flex:1;background:${isBlocked?'var(--success)':'var(--warning)'};color:white">${isBlocked?'✅ Débloquer':'🚫 Bloquer'}</button>
-          <button onclick="deleteMember('${m.id}','${m.firstname} ${m.lastname}')" class="btn btn-danger btn-xs" style="flex:1">🗑 Retirer</button>
+          <button data-action="edit" data-idx="${idx}" class="btn btn-secondary btn-xs" style="flex:1">✏️ Modifier</button>
+          <button data-action="block" data-idx="${idx}" class="btn btn-xs" style="flex:1;background:${isBlocked?'#27AE60':'#E67E22'};color:white;border:none;cursor:pointer;border-radius:6px;padding:5px 8px;font-size:11px;font-weight:600">${isBlocked?'✅ Débloquer':'🚫 Bloquer'}</button>
+          <button data-action="delete" data-idx="${idx}" class="btn btn-danger btn-xs" style="flex:1">🗑 Retirer</button>
         </div>` : ''}
+      ${!isMe && !admin ? '<div style="font-size:11px;color:var(--light);margin-top:8px">👑 Seuls les admins peuvent gérer</div>' : ''}
+      ${isMe ? '<div style="font-size:11px;color:var(--light);margin-top:8px">👤 C\'est vous — <a href="#" onclick="openMyProfile();return false;" style="color:var(--forest)">Modifier mon profil</a></div>' : ''}
     </div>`;
   }).join('');
+
+  // Attach events via delegation — no onclick in HTML
+  g.addEventListener('click', function handler(e) {
+    const btn = e.target.closest('button[data-action]');
+    if (!btn) return;
+    const idx = parseInt(btn.dataset.idx);
+    const m   = currentFamily.members[idx];
+    if (!m) return;
+    const action = btn.dataset.action;
+    console.log('Member action:', action, 'member:', m.firstname, 'id:', m.id);
+    if (action === 'block') {
+      m.status = m.status === 'blocked' ? 'active' : 'blocked';
+      console.log('New status:', m.status);
+      saveToFirestore();
+      renderMembers();
+      showToast(m.firstname + (m.status==='blocked' ? ' bloqué 🚫' : ' débloqué ✅'), 'success');
+    } else if (action === 'edit') {
+      openEditMember(m.id);
+    } else if (action === 'delete') {
+      deleteMember(m.id, m.firstname + ' ' + m.lastname);
+    }
+    // Remove listener to avoid duplicates after re-render
+    g.removeEventListener('click', handler);
+  }, { once: true });
+
   const dfc=document.getElementById('display-family-code');
   if(dfc) dfc.textContent=currentFamily.code;
   renderPendingRequests();
