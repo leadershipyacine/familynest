@@ -330,6 +330,68 @@ hr.divider-line{border:none;border-top:1px solid var(--warm);margin:14px 0;}
 .member-tab.active{background:var(--forest);color:white;border-color:var(--forest);}
 .active-filter{background:var(--forest)!important;color:white!important;}
 @media(max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}}
+
+/* ══ MOBILE RESPONSIVE COMPLET ══ */
+#mobile-menu-btn{display:none;}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:199;}
+.sidebar-overlay.show{display:block;}
+
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);transition:transform 0.3s ease;z-index:200;width:240px;}
+  .sidebar.open{transform:translateX(0);}
+  .main-content{margin-left:0!important;}
+  .topbar{padding:12px 14px;}
+  .topbar h2{font-size:16px;}
+  #topbar-date{display:none!important;}
+  .content-area{padding:12px 10px;}
+  .card{padding:14px;margin-bottom:10px;}
+  .card-title{font-size:15px;}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr!important;gap:10px;}
+  #stat-cards{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px;}
+  .stat-card{padding:12px;}
+  .stat-info .value{font-size:17px;}
+  .btn{min-height:44px;}
+  .btn-sm{min-height:38px;padding:8px 14px;font-size:13px;}
+  .btn-xs{min-height:36px;padding:6px 10px;}
+  .modal-overlay{align-items:flex-end;padding:0;}
+  .modal{width:100%!important;max-width:100%!important;border-radius:20px 20px 0 0;max-height:92vh;overflow-y:auto;padding:20px 16px;}
+  .modal-header{margin-bottom:16px;}
+  .input-row{flex-direction:column;}
+  .auth-right{padding:24px 16px!important;}
+  .auth-tab-new{font-size:11px;padding:8px 5px;}
+  #members-grid{grid-template-columns:1fr!important;}
+  .member-card{padding:14px;}
+  #chat-messages{height:260px;}
+  /* Sidebar nav compact */
+  .nav-section{padding:7px 10px 2px;font-size:9px;}
+  .nav-item{padding:9px 10px;font-size:12px;margin:1px 4px;gap:7px;}
+  .nav-icon{font-size:15px;width:16px;}
+  .sidebar-header{padding:14px 12px 10px;}
+  .sidebar-logo{font-size:15px;}
+  .family-badge{padding:7px 9px;margin-top:7px;}
+  .family-badge .badge-name{font-size:11px;}
+  .family-badge .badge-code{font-size:10px;}
+  .sidebar-footer{padding:10px 12px;}
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  table{min-width:480px;}
+  .topbar-actions .btn-sm{padding:6px 10px;font-size:12px;}
+  #mobile-menu-btn{
+    display:flex!important;
+    width:40px;height:40px;align-items:center;justify-content:center;
+    background:var(--cream);border:none;border-radius:10px;
+    font-size:20px;cursor:pointer;flex-shrink:0;margin-right:6px;
+  }
+}
+@media(max-width:480px){
+  .sidebar{width:220px;}
+  #stat-cards{grid-template-columns:1fr 1fr!important;}
+  .stat-info .value{font-size:15px;}
+  .content-area{padding:8px 6px;}
+  .card{padding:12px;}
+  .topbar h2{font-size:14px;}
+  .auth-tab-new{font-size:10px;padding:7px 3px;}
+  .topbar-actions .btn-sm{display:none;}
+}
 .chat-msg{display:flex;margin-bottom:4px;}.chat-bubble{max-width:80%;padding:12px 16px;border-radius:16px;font-size:14px;line-height:1.5;}.chat-bubble.assistant{background:var(--forest);color:white;border-bottom-left-radius:4px;}.chat-bubble.user{background:var(--sage);color:var(--dark);border-bottom-right-radius:4px;margin-left:auto;}.chat-msg.user{flex-direction:row-reverse;}.tache-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--cream);}.tache-row:last-child{border-bottom:none;}.veh-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:14px;border-left:4px solid var(--sage);}.contact-card{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;border:2px solid var(--warm);margin-bottom:8px;transition:border-color 0.15s;}.contact-card:hover{border-color:var(--sage);}.contact-icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--cream);flex-shrink:0;}.repas-slot{padding:10px;border-radius:10px;background:var(--cream);margin-bottom:6px;font-size:13px;}.repas-slot.filled{background:rgba(76,29,149,0.08);border-left:3px solid var(--forest);}.med-card{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;border:2px solid var(--warm);margin-bottom:8px;}.med-icon{font-size:24px;flex-shrink:0;}.urgence-btn{display:flex;align-items:center;gap:10px;padding:14px;border-radius:12px;border:none;background:var(--white);cursor:pointer;font-family:inherit;font-size:14px;font-weight:600;width:100%;margin-bottom:8px;box-shadow:var(--shadow);transition:transform 0.15s;}.urgence-btn:hover{transform:translateY(-1px);}.urgence-btn.red{border-left:4px solid var(--danger);}.urgence-btn.orange{border-left:4px solid var(--warning);}.urgence-btn.blue{border-left:4px solid var(--info);}.daily-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--cream);font-size:13px;}.daily-item:last-child{border-bottom:none;}
 </style>
 </head>
@@ -526,9 +588,13 @@ hr.divider-line{border:none;border-top:1px solid var(--warm);margin:14px 0;}
 
 <!-- ══════════ APP ══════════ -->
 <div id="app">
-  <aside class="sidebar">
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeMobileSidebar()"></div>
+  <aside class="sidebar" id="main-sidebar">
     <div class="sidebar-header">
-      <div class="sidebar-logo">🏠 FamilyNest</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0">
+        <div class="sidebar-logo">🏠 FamilyNest</div>
+        <button id="sidebar-close-btn" onclick="closeMobileSidebar()" style="display:none;background:none;border:none;color:rgba(255,255,255,0.5);font-size:22px;cursor:pointer;padding:4px;line-height:1">✕</button>
+      </div>
       <div class="family-badge">
         <div class="badge-name" id="sidebar-family-name">Famille Dupont</div>
         <div class="badge-code" id="sidebar-family-code">FAM-2024-XKQR</div>
@@ -578,6 +644,7 @@ hr.divider-line{border:none;border-top:1px solid var(--warm);margin:14px 0;}
 
   <div class="main-content">
     <div class="topbar">
+      <button id="mobile-menu-btn" onclick="toggleMobileSidebar()" aria-label="Menu">☰</button>
       <h2 id="page-title">Tableau de bord</h2>
       <div class="topbar-actions">
         <span id="topbar-date" style="font-size:12px;color:var(--light);"></span>
@@ -5100,6 +5167,210 @@ launchApp = function() {
   }
 };
 
+// ══ MOBILE SIDEBAR ══
+function toggleMobileSidebar() {
+  const sidebar  = document.getElementById('main-sidebar');
+  const overlay  = document.getElementById('sidebar-overlay');
+  const closeBtn = document.getElementById('sidebar-close-btn');
+  if (!sidebar) return;
+  const isOpen = sidebar.classList.contains('open');
+  if (isOpen) {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    if (closeBtn) closeBtn.style.display = 'none';
+  } else {
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+    if (closeBtn) closeBtn.style.display = 'block';
+  }
+}
+function closeMobileSidebar() {
+  const sidebar  = document.getElementById('main-sidebar');
+  const overlay  = document.getElementById('sidebar-overlay');
+  const closeBtn = document.getElementById('sidebar-close-btn');
+  if (sidebar) sidebar.classList.remove('open');
+  if (overlay) overlay.classList.remove('show');
+  if (closeBtn) closeBtn.style.display = 'none';
+}
+
+// Close sidebar when a nav item is clicked on mobile
+const _origShowSectionMobile = showSection;
+showSection = function(id) {
+  _origShowSectionMobile(id);
+  if (window.innerWidth <= 768) closeMobileSidebar();
+};
+
+// Show/hide close button on resize
+window.addEventListener('resize', () => {
+  const closeBtn = document.getElementById('sidebar-close-btn');
+  if (closeBtn) closeBtn.style.display = window.innerWidth <= 768 ? 'block' : 'none';
+  if (window.innerWidth > 768) {
+    const sidebar = document.getElementById('main-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('show');
+  }
+});
+
+// ══ SCAN — LOCAL FALLBACK PARSER ══
+// Fonctionne sans clé API — analyse le texte localement
+function parseReceiptLocally(text) {
+  const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+  const articles = [];
+  let total = 0;
+  let magasin = '';
+  let date = '';
+
+  // Detect store name (usually first non-empty line)
+  if (lines.length > 0) magasin = lines[0];
+
+  // Regex patterns for prices
+  const priceRegex = /(\d+[.,]\d{2})\s*€?/;
+  const dateRegex = /(\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{2,4})/;
+  const totalRegex = /total|ttc|à payer|montant/i;
+  const qtyRegex = /^(\d+)\s*[xX×]\s*(.+)/;
+
+  lines.forEach(line => {
+    // Date detection
+    const dateMatch = line.match(dateRegex);
+    if (dateMatch && !date) date = dateMatch[1];
+
+    // Total detection
+    if (totalRegex.test(line)) {
+      const priceMatch = line.match(priceRegex);
+      if (priceMatch) total = parseFloat(priceMatch[1].replace(',', '.'));
+      return;
+    }
+
+    // Article detection — line with price
+    const priceMatch = line.match(priceRegex);
+    if (priceMatch) {
+      const prix = parseFloat(priceMatch[1].replace(',', '.'));
+      let nom = line.replace(priceMatch[0], '').trim();
+      let quantite = 1;
+
+      // Check quantity pattern "2 x Article"
+      const qtyMatch = nom.match(qtyRegex);
+      if (qtyMatch) {
+        quantite = parseInt(qtyMatch[1]);
+        nom = qtyMatch[2].trim();
+      }
+
+      // Clean up article name
+      nom = nom.replace(/^[-*•]\s*/, '').replace(/\s+/g, ' ').trim();
+
+      if (nom.length > 2 && nom.length < 60 && prix > 0 && prix < 500) {
+        // Detect category
+        const nomLower = nom.toLowerCase();
+        let categorie = '🥫 Épicerie';
+        if (/lait|yaourt|beurre|fromage|crème|œuf/i.test(nomLower)) categorie = '🥛 Produits laitiers';
+        else if (/pain|baguette|brioche/i.test(nomLower)) categorie = '🍞 Boulangerie';
+        else if (/eau|jus|café|thé|bière|vin|boisson/i.test(nomLower)) categorie = '🧃 Boissons';
+        else if (/poulet|bœuf|viande|poisson|saumon|jambon/i.test(nomLower)) categorie = '🥩 Viande & Poisson';
+        else if (/pomme|banane|orange|tomate|carotte|salade|légume|fruit/i.test(nomLower)) categorie = '🥦 Fruits & Légumes';
+        else if (/shampoing|savon|dentifrice|déodorant/i.test(nomLower)) categorie = '🧴 Hygiène';
+        else if (/lessive|éponge|sac|poubelle|ménage/i.test(nomLower)) categorie = '🧹 Entretien';
+
+        articles.push({ nom, quantite, prix_unitaire: prix, total: prix * quantite, categorie });
+      }
+    }
+  });
+
+  // If no total found, sum articles
+  if (total === 0) total = articles.reduce((s, a) => s + a.total, 0);
+
+  return {
+    type: 'recu',
+    titre: magasin || 'Ticket de caisse',
+    date, magasin, total: parseFloat(total.toFixed(2)),
+    monnaie: currentFamily?.currencySym || '€',
+    articles
+  };
+}
+
+// Override analyzeWithAI to use local parser as fallback
+const _origAnalyzeWithAI = analyzeWithAI;
+analyzeWithAI = async function(text, base64, mediaType) {
+  const si = document.getElementById('scan-status-icon');
+  const st = document.getElementById('scan-status-title');
+  const sm = document.getElementById('scan-status-msg');
+  const card = document.getElementById('scan-status-card');
+  if (card) card.style.display = 'block';
+
+  // If it's text (not image), try local parser first
+  if (text && !base64) {
+    if (si) si.textContent = '⚡';
+    if (st) st.textContent = 'Analyse locale en cours…';
+    if (sm) sm.textContent = 'Extraction des données du texte';
+    setTimeout(() => {
+      try {
+        const result = parseReceiptLocally(text);
+        if (si) si.textContent = '✅';
+        if (st) st.textContent = `${result.articles.length} article(s) trouvé(s)`;
+        if (sm) sm.textContent = 'Analyse terminée';
+        displayScanResults(result);
+      } catch(e) {
+        if (si) si.textContent = '❌';
+        if (st) st.textContent = 'Erreur d\'analyse';
+      }
+    }, 500);
+    return;
+  }
+
+  // For images, try API first, fallback to local
+  if (si) si.textContent = '⏳';
+  if (st) st.textContent = 'Envoi vers l\'IA…';
+  if (sm) sm.textContent = 'Analyse de l\'image en cours';
+
+  try {
+    const endpoint = window.location.hostname.includes('localhost') || window.location.hostname.includes('claudeusercontent')
+      ? 'https://familinest.netlify.app/.netlify/functions/chat'
+      : '/.netlify/functions/chat';
+
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: base64
+            ? [
+                { type:'image', source:{ type:'base64', media_type:mediaType, data:base64 } },
+                { type:'text', text:'Analyse ce ticket de caisse. Réponds UNIQUEMENT en JSON: {"type":"recu","titre":"NomMagasin","date":"JJ/MM/AAAA","total":0.00,"monnaie":"€","magasin":"Nom","articles":[{"nom":"Produit","quantite":1,"prix_unitaire":0.00,"total":0.00,"categorie":"🥫 Épicerie"}]}' }
+              ]
+            : [{ type:'text', text: 'Analyse ce ticket:\n' + text + '\nRéponds en JSON: {"type":"recu","titre":"...","articles":[{"nom":"...","quantite":1,"prix_unitaire":0.00,"total":0.00,"categorie":"..."}],"total":0.00}' }]
+        }]
+      })
+    });
+
+    if (!res.ok) throw new Error('API ' + res.status);
+    const data = await res.json();
+    const raw = data.content?.[0]?.text || '{}';
+    const parsed = JSON.parse(raw.replace(/```json|```/g, '').trim());
+    if (si) si.textContent = '✅';
+    if (st) st.textContent = `${parsed.articles?.length || 0} article(s) trouvé(s) via IA`;
+    displayScanResults(parsed);
+
+  } catch(e) {
+    console.log('API scan failed, using local parser:', e.message);
+    // Fallback to local parser for image (extract text from filename)
+    if (si) si.textContent = '⚡';
+    if (st) st.textContent = 'Analyse locale (sans IA)';
+    if (sm) sm.textContent = 'Pour une meilleure analyse, configurez la clé API dans Netlify';
+    // Can't parse image locally, show message
+    displayScanResults({
+      type: 'image',
+      titre: 'Image scannée',
+      articles: [],
+      total: 0,
+      monnaie: currentFamily?.currencySym || '€',
+      informations: { message: 'Pour analyser les images, configurez la clé API Anthropic dans Netlify → Environment variables → ANTHROPIC_API_KEY' }
+    });
+  }
+};
+
 // ── Auto-fill email sauvegardé ──
 (function(){const saved=localStorage.getItem('fn_email');if(saved){const inp=document.getElementById('login-email');if(inp)inp.value=saved;}})();
 
@@ -5123,4 +5394,3 @@ if ('serviceWorker' in navigator &&
   });
 }
 </script>
-
