@@ -405,201 +405,131 @@ hr.divider-line{border:none;border-top:1px solid var(--warm);margin:14px 0;}
     <div class="auth-left-content">
       <div class="auth-brand-icon">🏠</div>
       <div class="auth-brand-title">FamilyNest</div>
-      <div class="auth-brand-sub">Votre foyer numérique.<br>Organisez toute la vie de famille en un seul endroit.</div>
+      <div class="auth-brand-sub" id="auth-tagline">Votre foyer numérique.<br>Organisez toute la vie de famille en un seul endroit.</div>
       <div class="auth-features">
-        <div class="auth-feat"><span class="auth-feat-icon">👨‍👩‍👧‍👦</span><div class="auth-feat-text"><strong>Toute la famille connectée</strong>Partagez un code famille et accédez aux mêmes données</div></div>
-        <div class="auth-feat"><span class="auth-feat-icon">📄</span><div class="auth-feat-text"><strong>Documents & Alertes</strong>Passeports, factures, dates d'expiration suivis automatiquement</div></div>
-        <div class="auth-feat"><span class="auth-feat-icon">💶</span><div class="auth-feat-text"><strong>Budget & Dépenses</strong>Simulation de crédit, charges mensuelles, suivi en temps réel</div></div>
-        <div class="auth-feat"><span class="auth-feat-icon">✈️</span><div class="auth-feat-text"><strong>Vacances & Agenda</strong>Planifiez, organisez, ne ratez plus aucun événement</div></div>
+        <div class="auth-feat"><span class="auth-feat-icon">👨‍👩‍👧‍👦</span><div class="auth-feat-text"><strong data-i18n="feat_family_title">Toute la famille connectée</strong><span data-i18n="feat_family_sub">Partagez un code famille</span></div></div>
+        <div class="auth-feat"><span class="auth-feat-icon">📄</span><div class="auth-feat-text"><strong data-i18n="feat_docs_title">Documents &amp; Alertes</strong><span data-i18n="feat_docs_sub">Dates d'expiration suivies automatiquement</span></div></div>
+        <div class="auth-feat"><span class="auth-feat-icon">💶</span><div class="auth-feat-text"><strong data-i18n="feat_budget_title">Budget &amp; Dépenses</strong><span data-i18n="feat_budget_sub">Suivi en temps réel</span></div></div>
+        <div class="auth-feat"><span class="auth-feat-icon">✈️</span><div class="auth-feat-text"><strong data-i18n="feat_travel_title">Vacances &amp; Agenda</strong><span data-i18n="feat_travel_sub">Planifiez, organisez</span></div></div>
       </div>
     </div>
   </div>
 
   <!-- RIGHT — Forms -->
   <div class="auth-right">
-
-    <!-- Tabs -->
     <div class="auth-tabs-new" id="auth-tabs">
-      <button class="auth-tab-new active"  onclick="switchAuthTab('login')">Connexion</button>
-      <button class="auth-tab-new"         onclick="switchAuthTab('register')">Créer un compte</button>
-      <button class="auth-tab-new"         onclick="switchAuthTab('join')">Rejoindre ma famille</button>
+      <button class="auth-tab-new active" onclick="switchAuthTab('login')" data-i18n="tab_login">Connexion</button>
+      <button class="auth-tab-new" onclick="switchAuthTab('register')" data-i18n="tab_register">Créer un compte</button>
+      <button class="auth-tab-new" onclick="switchAuthTab('join')" data-i18n="tab_join">Rejoindre ma famille</button>
     </div>
 
-    <!-- ── LOGIN ── -->
+    <!-- LOGIN -->
     <div id="login-form">
       <div class="auth-right-header">
-        <h2>Bon retour 👋</h2>
-        <p>Connectez-vous pour accéder à votre foyer</p>
+        <h2 data-i18n="login_title">Bon retour 👋</h2>
+        <p data-i18n="login_sub">Connectez-vous pour accéder à votre foyer</p>
       </div>
       <div class="auth-input-group">
-        <label>Adresse email <span style="color:var(--danger)">*</span></label>
-        <input type="email" id="login-email" placeholder="votre@email.com" autocomplete="email" required>
+        <label><span data-i18n="lbl_email">Adresse email</span> <span style="color:var(--danger)">*</span></label>
+        <input type="email" id="login-email" placeholder="votre@email.com" autocomplete="email">
       </div>
       <div class="auth-input-group">
-        <label>Mot de passe <span style="color:var(--danger)">*</span></label>
-        <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" required
-          onkeydown="if(event.key==='Enter') handleLogin()">
+        <label><span data-i18n="lbl_password">Mot de passe</span> <span style="color:var(--danger)">*</span></label>
+        <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter') handleLogin()">
       </div>
       <div class="auth-remember">
         <input type="checkbox" id="remember-me" checked>
-        <label for="remember-me">Mémoriser mon email</label>
+        <label for="remember-me" data-i18n="lbl_remember">Mémoriser mon email</label>
       </div>
-      <button class="auth-btn-primary" onclick="handleLogin()">🔑 Connexion</button>
-      <div class="auth-divider">ou continuer avec</div>
+      <button class="auth-btn-primary" onclick="handleLogin()"><span data-i18n="btn_login">🔑 Connexion</span></button>
+      <div class="auth-divider"><span data-i18n="lbl_or_continue">ou continuer avec</span></div>
       <div style="display:flex;gap:10px;margin-bottom:10px">
-        <button onclick="loginWithGoogle()" style="flex:1;padding:12px;background:white;border:2px solid var(--warm);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;color:var(--dark)" onmouseover="this.style.borderColor='#4285f4'" onmouseout="this.style.borderColor='var(--warm)'">
+        <button onclick="loginWithGoogle()" style="flex:1;padding:12px;background:white;border:2px solid var(--warm);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--dark)">
           <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
           Google
         </button>
-        <button onclick="loginWithMicrosoft()" style="flex:1;padding:12px;background:white;border:2px solid var(--warm);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;color:var(--dark)" onmouseover="this.style.borderColor='#0078d4'" onmouseout="this.style.borderColor='var(--warm)'">
+        <button onclick="loginWithMicrosoft()" style="flex:1;padding:12px;background:white;border:2px solid var(--warm);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--dark)">
           <svg width="18" height="18" viewBox="0 0 24 24"><rect x="1" y="1" width="10.5" height="10.5" fill="#f25022"/><rect x="12.5" y="1" width="10.5" height="10.5" fill="#7fba00"/><rect x="1" y="12.5" width="10.5" height="10.5" fill="#00a4ef"/><rect x="12.5" y="12.5" width="10.5" height="10.5" fill="#ffb900"/></svg>
           Microsoft
         </button>
       </div>
-      <div class="auth-divider">pas encore de compte ?</div>
-      <button class="auth-btn-secondary" onclick="switchAuthTab('register')">🏡 Créer une famille</button>
-      <button class="auth-btn-secondary" onclick="switchAuthTab('join')" style="margin-top:8px">🔗 Rejoindre ma famille</button>
+      <div class="auth-divider"><span data-i18n="lbl_no_account">pas encore de compte ?</span></div>
+      <button class="auth-btn-secondary" onclick="switchAuthTab('register')"><span data-i18n="btn_create_family">🏡 Créer une famille</span></button>
+      <button class="auth-btn-secondary" onclick="switchAuthTab('join')" style="margin-top:8px"><span data-i18n="btn_join_family">🔗 Rejoindre ma famille</span></button>
     </div>
 
-    <!-- ── CRÉER UNE FAMILLE ── -->
+    <!-- CRÉER UN COMPTE -->
     <div id="register-form" style="display:none">
       <div class="auth-right-header">
-        <h2>Créer un compte 🏠</h2>
-        <p>Tous les champs sont obligatoires</p>
+        <h2 data-i18n="reg_title">Créer un compte 🏠</h2>
+        <p data-i18n="lbl_all_required">Tous les champs sont obligatoires</p>
       </div>
       <div style="display:flex;gap:10px">
-        <div class="auth-input-group" style="flex:1">
-          <label>Prénom <span style="color:var(--danger)">*</span></label>
-          <input type="text" id="reg-firstname" placeholder="Jean" autocomplete="given-name" required>
-        </div>
-        <div class="auth-input-group" style="flex:1">
-          <label>Nom <span style="color:var(--danger)">*</span></label>
-          <input type="text" id="reg-lastname" placeholder="Dupont" autocomplete="family-name" required>
-        </div>
+        <div class="auth-input-group" style="flex:1"><label><span data-i18n="lbl_firstname">Prénom</span> <span style="color:var(--danger)">*</span></label><input type="text" id="reg-firstname" placeholder="Jean" autocomplete="given-name"></div>
+        <div class="auth-input-group" style="flex:1"><label><span data-i18n="lbl_lastname">Nom</span> <span style="color:var(--danger)">*</span></label><input type="text" id="reg-lastname" placeholder="Dupont" autocomplete="family-name"></div>
       </div>
+      <div class="auth-input-group"><label><span data-i18n="lbl_dob">Date de naissance</span> <span style="color:var(--danger)">*</span></label><input type="date" id="reg-dob"></div>
+      <div class="auth-input-group"><label><span data-i18n="lbl_email">Email</span> <span style="color:var(--danger)">*</span></label><input type="email" id="reg-email" placeholder="votre@email.com" autocomplete="email"></div>
+      <div class="auth-input-group"><label><span data-i18n="lbl_password">Mot de passe</span> <span style="color:var(--danger)">*</span></label><input type="password" id="reg-password" placeholder="Minimum 6 caractères" autocomplete="new-password"></div>
       <div class="auth-input-group">
-        <label>Date de naissance <span style="color:var(--danger)">*</span></label>
-        <input type="date" id="reg-dob" required>
-      </div>
-      <div class="auth-input-group">
-        <label>Email <span style="color:var(--danger)">*</span></label>
-        <input type="email" id="reg-email" placeholder="votre@email.com" autocomplete="email" required>
-      </div>
-      <div class="auth-input-group">
-        <label>Mot de passe <span style="color:var(--danger)">*</span></label>
-        <input type="password" id="reg-password" placeholder="Minimum 6 caractères" autocomplete="new-password" required>
-      </div>
-      <div class="auth-input-group">
-        <label>Rôle <span style="color:var(--danger)">*</span></label>
-        <select id="reg-role" required>
-          <option value="">— Choisir —</option>
-          <option value="Papa">👨 Papa</option>
-          <option value="Maman">👩 Maman</option>
-          <option value="Grand-père">👴 Grand-père</option>
-          <option value="Grand-mère">👵 Grand-mère</option>
+        <label><span data-i18n="lbl_role">Rôle</span> <span style="color:var(--danger)">*</span></label>
+        <select id="reg-role">
+          <option value="" data-i18n="lbl_choose">— Choisir —</option>
+          <option value="Papa">👨 Papa</option><option value="Maman">👩 Maman</option>
+          <option value="Grand-père">👴 Grand-père</option><option value="Grand-mère">👵 Grand-mère</option>
           <option value="Tuteur">🧑 Tuteur / Tutrice</option>
         </select>
       </div>
       <div class="auth-input-group">
-        <label>Pays <span style="color:var(--danger)">*</span></label>
-        <select id="reg-country" required onchange="onCountryChange('reg')">
-          <option value="">— Choisir votre pays —</option>
-        </select>
+        <label><span data-i18n="lbl_country">Pays</span> <span style="color:var(--danger)">*</span></label>
+        <select id="reg-country" onchange="onCountryChange('reg')"><option value="" data-i18n="lbl_choose_country">— Choisir votre pays —</option></select>
       </div>
       <div style="display:flex;gap:10px">
-        <div class="auth-input-group" style="flex:1">
-          <label>Langue de l'interface</label>
-          <select id="reg-lang" onchange="onLangChange('reg')">
-            <option value="fr">🇫🇷 Français</option>
-            <option value="en">🇬🇧 English</option>
-            <option value="ar">🇩🇿 العربية</option>
-            <option value="sv">🇸🇪 Svenska</option>
-            <option value="es">🇪🇸 Español</option>
-            <option value="de">🇩🇪 Deutsch</option>
-          </select>
-        </div>
-        <div class="auth-input-group" style="flex:1">
-          <label>Devise</label>
-          <input type="text" id="reg-currency" readonly style="background:var(--cream);color:var(--mid)">
-        </div>
+        <div class="auth-input-group" style="flex:1"><label data-i18n="lbl_language">Langue</label><select id="reg-lang" onchange="onLangChange('reg')"><option value="fr">🇫🇷 Français</option><option value="en">🇬🇧 English</option><option value="sv">🇸🇪 Svenska</option><option value="ar">🇩🇿 العربية</option><option value="es">🇪🇸 Español</option><option value="de">🇩🇪 Deutsch</option></select></div>
+        <div class="auth-input-group" style="flex:1"><label data-i18n="lbl_currency">Devise</label><input type="text" id="reg-currency" readonly style="background:var(--cream);color:var(--mid)"></div>
       </div>
-      <div class="auth-info-box">ℹ️ Un <strong>code famille unique</strong> sera créé. Partagez-le avec les autres membres pour qu'ils rejoignent votre foyer.</div>
-      <button class="auth-btn-primary" onclick="handleRegister()">🏡 Créer ma famille</button>
-      <div class="auth-divider">ou créer avec</div>
-      <div style="display:flex;gap:10px;margin-bottom:10px">
-        <button onclick="registerWithGoogle()" style="flex:1;padding:11px;background:white;border:2px solid var(--warm);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;color:var(--dark)">
-          <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-          Google
-        </button>
-        <button onclick="registerWithMicrosoft()" style="flex:1;padding:11px;background:white;border:2px solid var(--warm);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;color:var(--dark)">
-          <svg width="16" height="16" viewBox="0 0 24 24"><rect x="1" y="1" width="10.5" height="10.5" fill="#f25022"/><rect x="12.5" y="1" width="10.5" height="10.5" fill="#7fba00"/><rect x="1" y="12.5" width="10.5" height="10.5" fill="#00a4ef"/><rect x="12.5" y="12.5" width="10.5" height="10.5" fill="#ffb900"/></svg>
-          Microsoft
-        </button>
-      </div>
-      <div class="auth-divider">déjà un compte ?</div>
-      <button class="auth-btn-secondary" onclick="switchAuthTab('login')">Se connecter</button>
+      <div class="auth-info-box" data-i18n="reg_info">ℹ️ Un code famille unique sera créé.</div>
+      <button class="auth-btn-primary" onclick="handleRegister()"><span data-i18n="btn_create_account">🏡 Créer mon compte</span></button>
+      <div class="auth-divider"><span data-i18n="lbl_have_account">déjà un compte ?</span></div>
+      <button class="auth-btn-secondary" onclick="switchAuthTab('login')"><span data-i18n="btn_signin">Se connecter</span></button>
     </div>
 
-    <!-- ── REJOINDRE MA FAMILLE ── -->
+    <!-- REJOINDRE MA FAMILLE -->
     <div id="join-form" style="display:none">
       <div class="auth-right-header">
-        <h2>Rejoindre ma famille 🤝</h2>
-        <p>Entrez le code reçu d'un parent — votre demande sera approuvée par un admin</p>
+        <h2 data-i18n="join_title">Rejoindre ma famille 🤝</h2>
+        <p data-i18n="join_sub">Entrez le code reçu d'un parent</p>
       </div>
       <div style="display:flex;gap:10px">
-        <div class="auth-input-group" style="flex:1">
-          <label>Prénom <span style="color:var(--danger)">*</span></label>
-          <input type="text" id="join-firstname" placeholder="Marie" required>
-        </div>
-        <div class="auth-input-group" style="flex:1">
-          <label>Nom <span style="color:var(--danger)">*</span></label>
-          <input type="text" id="join-lastname" placeholder="Dupont" required>
-        </div>
+        <div class="auth-input-group" style="flex:1"><label><span data-i18n="lbl_firstname">Prénom</span> <span style="color:var(--danger)">*</span></label><input type="text" id="join-firstname" placeholder="Marie"></div>
+        <div class="auth-input-group" style="flex:1"><label><span data-i18n="lbl_lastname">Nom</span> <span style="color:var(--danger)">*</span></label><input type="text" id="join-lastname" placeholder="Dupont"></div>
       </div>
+      <div class="auth-input-group"><label><span data-i18n="lbl_dob">Date de naissance</span> <span style="color:var(--danger)">*</span></label><input type="date" id="join-dob"></div>
+      <div class="auth-input-group"><label><span data-i18n="lbl_email">Email</span> <span style="color:var(--danger)">*</span></label><input type="email" id="join-email" placeholder="votre@email.com"></div>
+      <div class="auth-input-group"><label><span data-i18n="lbl_password">Mot de passe</span> <span style="color:var(--danger)">*</span></label><input type="password" id="join-password" placeholder="Minimum 6 caractères"></div>
       <div class="auth-input-group">
-        <label>Date de naissance <span style="color:var(--danger)">*</span></label>
-        <input type="date" id="join-dob" required>
-      </div>
-      <div class="auth-input-group">
-        <label>Email <span style="color:var(--danger)">*</span></label>
-        <input type="email" id="join-email" placeholder="votre@email.com" required>
-      </div>
-      <div class="auth-input-group">
-        <label>Mot de passe <span style="color:var(--danger)">*</span></label>
-        <input type="password" id="join-password" placeholder="Minimum 6 caractères" required>
-      </div>
-      <div class="auth-input-group">
-        <label>Rôle <span style="color:var(--danger)">*</span></label>
-        <select id="join-role" required>
-          <option value="">— Choisir —</option>
-          <option value="Papa">👨 Papa</option>
-          <option value="Maman">👩 Maman</option>
-          <option value="Enfant">👧 Enfant</option>
-          <option value="Grand-père">👴 Grand-père</option>
-          <option value="Grand-mère">👵 Grand-mère</option>
-          <option value="Tuteur">🧑 Tuteur / Tutrice</option>
+        <label><span data-i18n="lbl_role">Rôle</span> <span style="color:var(--danger)">*</span></label>
+        <select id="join-role">
+          <option value="" data-i18n="lbl_choose">— Choisir —</option>
+          <option value="Papa">👨 Papa</option><option value="Maman">👩 Maman</option>
+          <option value="Enfant">👧 Enfant</option><option value="Grand-père">👴 Grand-père</option>
+          <option value="Grand-mère">👵 Grand-mère</option><option value="Tuteur">🧑 Tuteur</option>
           <option value="Autre">⭐ Autre</option>
         </select>
       </div>
       <div class="auth-input-group">
-        <label>Pays <span style="color:var(--danger)">*</span></label>
-        <select id="join-country" required onchange="onCountryChange('join')">
-          <option value="">— Choisir votre pays —</option>
-        </select>
+        <label><span data-i18n="lbl_country">Pays</span> <span style="color:var(--danger)">*</span></label>
+        <select id="join-country" onchange="onCountryChange('join')"><option value="" data-i18n="lbl_choose_country">— Choisir votre pays —</option></select>
       </div>
       <div class="auth-input-group">
-        <label>🔑 Code famille <span style="color:var(--danger)">*</span></label>
-        <input type="text" id="join-code" placeholder="FAM-2025-XXXX" maxlength="14" class="join-code-input" required
-          onkeydown="if(event.key==='Enter') handleJoin()">
+        <label><span data-i18n="lbl_family_code">🔑 Code famille</span> <span style="color:var(--danger)">*</span></label>
+        <input type="text" id="join-code" placeholder="FAM-2025-XXXX" maxlength="14" class="join-code-input" onkeydown="if(event.key==='Enter') handleJoin()">
       </div>
-      <div class="auth-info-box" style="background:rgba(201,169,110,0.1);border-color:rgba(201,169,110,0.3)">
-        ⏳ Votre demande sera envoyée aux parents pour approbation. Vous recevrez un email de confirmation.
-      </div>
-      <button class="auth-btn-primary" onclick="handleJoin()">📤 Envoyer ma demande</button>
-      <div class="auth-divider">déjà un compte ?</div>
-      <button class="auth-btn-secondary" onclick="switchAuthTab('login')">Se connecter</button>
+      <div class="auth-info-box" data-i18n="join_info">⏳ Votre demande sera envoyée aux parents pour approbation.</div>
+      <button class="auth-btn-primary" onclick="handleJoin()"><span data-i18n="btn_send_request">📤 Envoyer ma demande</span></button>
+      <div class="auth-divider"><span data-i18n="lbl_have_account">déjà un compte ?</span></div>
+      <button class="auth-btn-secondary" onclick="switchAuthTab('login')"><span data-i18n="btn_signin">Se connecter</span></button>
     </div>
-
   </div>
 </div>
 
@@ -3846,17 +3776,28 @@ const TRANSLATIONS = {
     sante:'Santé & Médical', vehicules:'Véhicules', maison:'Entretien maison',
     contacts:'Contacts & Urgences', assistant:'Assistant IA', emailconfig:'Config. Email',
     parametres:'Paramètres', admin:'Administration',
-    // Auth
     login_title:'Bon retour 👋', login_sub:'Connectez-vous pour accéder à votre foyer',
     tab_login:'Connexion', tab_register:'Créer un compte', tab_join:'Rejoindre ma famille',
-    // Buttons
-    add:'+ Ajouter', save:'💾 Enregistrer', cancel:'Annuler', delete:'Supprimer',
-    edit:'Modifier', logout:'🚪 Déconnexion', my_profile:'👤 Mon profil',
-    // Common
-    welcome:'Bienvenue', family:'Famille', member:'Membre', email:'Email',
-    password:'Mot de passe', firstname:'Prénom', lastname:'Nom', role:'Rôle',
-    country:'Pays', language:'Langue', currency:'Devise',
-    required:'Tous les champs sont obligatoires',
+    reg_title:'Créer un compte 🏠', join_title:'Rejoindre ma famille 🤝',
+    join_sub:'Entrez le code reçu d\'un parent',
+    lbl_email:'Adresse email', lbl_password:'Mot de passe', lbl_remember:'Mémoriser mon email',
+    lbl_firstname:'Prénom', lbl_lastname:'Nom', lbl_dob:'Date de naissance',
+    lbl_role:'Rôle', lbl_country:'Pays', lbl_language:'Langue', lbl_currency:'Devise',
+    lbl_family_code:'🔑 Code famille', lbl_choose:'— Choisir —', lbl_choose_country:'— Choisir votre pays —',
+    lbl_all_required:'Tous les champs sont obligatoires',
+    lbl_or_continue:'ou continuer avec', lbl_no_account:'pas encore de compte ?',
+    lbl_have_account:'déjà un compte ?',
+    btn_login:'🔑 Connexion', btn_create_family:'🏡 Créer une famille',
+    btn_join_family:'🔗 Rejoindre ma famille', btn_create_account:'🏡 Créer mon compte',
+    btn_send_request:'📤 Envoyer ma demande', btn_signin:'Se connecter',
+    reg_info:'ℹ️ Un code famille unique sera créé. Partagez-le avec les autres membres.',
+    join_info:'⏳ Votre demande sera envoyée aux parents pour approbation.',
+    feat_family_title:'Toute la famille connectée', feat_family_sub:'Partagez un code famille',
+    feat_docs_title:'Documents & Alertes', feat_docs_sub:'Dates d\'expiration suivies automatiquement',
+    feat_budget_title:'Budget & Dépenses', feat_budget_sub:'Suivi en temps réel',
+    feat_travel_title:'Vacances & Agenda', feat_travel_sub:'Planifiez, organisez',
+    add:'+ Ajouter', save:'💾 Enregistrer', logout:'🚪 Déconnexion', my_profile:'👤 Mon profil',
+    tagline:'Votre foyer numérique.<br>Organisez toute la vie de famille en un seul endroit.',
   },
   sv: {
     dashboard:'Instrumentpanel', membres:'Medlemmar', agenda:'Kalender',
@@ -3867,17 +3808,28 @@ const TRANSLATIONS = {
     sante:'Hälsa & Medicin', vehicules:'Fordon', maison:'Hemunderhåll',
     contacts:'Kontakter & Nöd', assistant:'AI-assistent', emailconfig:'E-postkonfig.',
     parametres:'Inställningar', admin:'Administration',
-    // Auth
     login_title:'Välkommen tillbaka 👋', login_sub:'Logga in för att komma åt ditt hem',
-    tab_login:'Logga in', tab_register:'Skapa familj', tab_join:'Gå med i familj',
-    // Buttons
-    add:'+ Lägg till', save:'💾 Spara', cancel:'Avbryt', delete:'Ta bort',
-    edit:'Redigera', logout:'🚪 Logga ut', my_profile:'👤 Min profil',
-    // Common
-    welcome:'Välkommen', family:'Familj', member:'Medlem', email:'E-post',
-    password:'Lösenord', firstname:'Förnamn', lastname:'Efternamn', role:'Roll',
-    country:'Land', language:'Språk', currency:'Valuta',
-    required:'Alla fält är obligatoriska',
+    tab_login:'Logga in', tab_register:'Skapa konto', tab_join:'Gå med i familj',
+    reg_title:'Skapa ett konto 🏠', join_title:'Gå med i min familj 🤝',
+    join_sub:'Ange koden du fått av en förälder',
+    lbl_email:'E-postadress', lbl_password:'Lösenord', lbl_remember:'Kom ihåg min e-post',
+    lbl_firstname:'Förnamn', lbl_lastname:'Efternamn', lbl_dob:'Födelsedatum',
+    lbl_role:'Roll', lbl_country:'Land', lbl_language:'Språk', lbl_currency:'Valuta',
+    lbl_family_code:'🔑 Familjakod', lbl_choose:'— Välj —', lbl_choose_country:'— Välj ditt land —',
+    lbl_all_required:'Alla fält är obligatoriska',
+    lbl_or_continue:'eller fortsätt med', lbl_no_account:'inget konto ännu?',
+    lbl_have_account:'har redan ett konto?',
+    btn_login:'🔑 Logga in', btn_create_family:'🏡 Skapa familj',
+    btn_join_family:'🔗 Gå med i min familj', btn_create_account:'🏡 Skapa mitt konto',
+    btn_send_request:'📤 Skicka ansökan', btn_signin:'Logga in',
+    reg_info:'ℹ️ En unik familjakod skapas. Dela den med andra familjemedlemmar.',
+    join_info:'⏳ Din ansökan skickas till föräldrarna för godkännande.',
+    feat_family_title:'Hela familjen ansluten', feat_family_sub:'Dela en familjakod',
+    feat_docs_title:'Dokument & Aviseringar', feat_docs_sub:'Utgångsdatum spåras automatiskt',
+    feat_budget_title:'Budget & Utgifter', feat_budget_sub:'Uppföljning i realtid',
+    feat_travel_title:'Semester & Kalender', feat_travel_sub:'Planera, organisera',
+    add:'+ Lägg till', save:'💾 Spara', logout:'🚪 Logga ut', my_profile:'👤 Min profil',
+    tagline:'Ditt digitala hem.<br>Organisera hela familjelivet på ett ställe.',
   },
   en: {
     dashboard:'Dashboard', membres:'Members', agenda:'Calendar',
@@ -3889,13 +3841,27 @@ const TRANSLATIONS = {
     contacts:'Contacts & Emergency', assistant:'AI Assistant', emailconfig:'Email Config',
     parametres:'Settings', admin:'Administration',
     login_title:'Welcome back 👋', login_sub:'Sign in to access your home',
-    tab_login:'Sign In', tab_register:'Create Family', tab_join:'Join Family',
-    add:'+ Add', save:'💾 Save', cancel:'Cancel', delete:'Delete',
-    edit:'Edit', logout:'🚪 Sign Out', my_profile:'👤 My Profile',
-    welcome:'Welcome', family:'Family', member:'Member', email:'Email',
-    password:'Password', firstname:'First Name', lastname:'Last Name', role:'Role',
-    country:'Country', language:'Language', currency:'Currency',
-    required:'All fields are required',
+    tab_login:'Sign In', tab_register:'Create Account', tab_join:'Join Family',
+    reg_title:'Create an account 🏠', join_title:'Join my family 🤝',
+    join_sub:'Enter the code from a parent',
+    lbl_email:'Email address', lbl_password:'Password', lbl_remember:'Remember my email',
+    lbl_firstname:'First name', lbl_lastname:'Last name', lbl_dob:'Date of birth',
+    lbl_role:'Role', lbl_country:'Country', lbl_language:'Language', lbl_currency:'Currency',
+    lbl_family_code:'🔑 Family code', lbl_choose:'— Choose —', lbl_choose_country:'— Choose your country —',
+    lbl_all_required:'All fields are required',
+    lbl_or_continue:'or continue with', lbl_no_account:'no account yet?',
+    lbl_have_account:'already have an account?',
+    btn_login:'🔑 Sign In', btn_create_family:'🏡 Create family',
+    btn_join_family:'🔗 Join my family', btn_create_account:'🏡 Create my account',
+    btn_send_request:'📤 Send request', btn_signin:'Sign in',
+    reg_info:'ℹ️ A unique family code will be created. Share it with other members.',
+    join_info:'⏳ Your request will be sent to parents for approval.',
+    feat_family_title:'Whole family connected', feat_family_sub:'Share a family code',
+    feat_docs_title:'Documents & Alerts', feat_docs_sub:'Expiry dates tracked automatically',
+    feat_budget_title:'Budget & Expenses', feat_budget_sub:'Real-time tracking',
+    feat_travel_title:'Vacations & Calendar', feat_travel_sub:'Plan, organize',
+    add:'+ Add', save:'💾 Save', logout:'🚪 Sign Out', my_profile:'👤 My Profile',
+    tagline:'Your digital home.<br>Organize the whole family life in one place.',
   },
   ar: {
     dashboard:'لوحة التحكم', membres:'الأعضاء', agenda:'التقويم',
@@ -3907,13 +3873,27 @@ const TRANSLATIONS = {
     contacts:'جهات الاتصال', assistant:'المساعد الذكي', emailconfig:'إعداد البريد',
     parametres:'الإعدادات', admin:'الإدارة',
     login_title:'مرحباً بعودتك 👋', login_sub:'تسجيل الدخول للوصول إلى منزلك',
-    tab_login:'تسجيل الدخول', tab_register:'إنشاء عائلة', tab_join:'الانضمام لعائلة',
-    add:'+ إضافة', save:'💾 حفظ', cancel:'إلغاء', delete:'حذف',
-    edit:'تعديل', logout:'🚪 تسجيل الخروج', my_profile:'👤 ملفي',
-    welcome:'مرحباً', family:'العائلة', member:'عضو', email:'البريد الإلكتروني',
-    password:'كلمة المرور', firstname:'الاسم الأول', lastname:'اسم العائلة', role:'الدور',
-    country:'البلد', language:'اللغة', currency:'العملة',
-    required:'جميع الحقول مطلوبة',
+    tab_login:'تسجيل الدخول', tab_register:'إنشاء حساب', tab_join:'الانضمام لعائلة',
+    reg_title:'إنشاء حساب 🏠', join_title:'الانضمام إلى عائلتي 🤝',
+    join_sub:'أدخل الرمز الذي تلقيته من أحد الوالدين',
+    lbl_email:'البريد الإلكتروني', lbl_password:'كلمة المرور', lbl_remember:'تذكر بريدي الإلكتروني',
+    lbl_firstname:'الاسم الأول', lbl_lastname:'اسم العائلة', lbl_dob:'تاريخ الميلاد',
+    lbl_role:'الدور', lbl_country:'البلد', lbl_language:'اللغة', lbl_currency:'العملة',
+    lbl_family_code:'🔑 رمز العائلة', lbl_choose:'— اختر —', lbl_choose_country:'— اختر بلدك —',
+    lbl_all_required:'جميع الحقول مطلوبة',
+    lbl_or_continue:'أو تابع مع', lbl_no_account:'ليس لديك حساب؟',
+    lbl_have_account:'لديك حساب بالفعل؟',
+    btn_login:'🔑 تسجيل الدخول', btn_create_family:'🏡 إنشاء عائلة',
+    btn_join_family:'🔗 الانضمام لعائلتي', btn_create_account:'🏡 إنشاء حسابي',
+    btn_send_request:'📤 إرسال الطلب', btn_signin:'تسجيل الدخول',
+    reg_info:'ℹ️ سيتم إنشاء رمز عائلة فريد. شاركه مع الأعضاء الآخرين.',
+    join_info:'⏳ سيتم إرسال طلبك إلى الوالدين للموافقة.',
+    feat_family_title:'العائلة كلها متصلة', feat_family_sub:'شارك رمز العائلة',
+    feat_docs_title:'الوثائق والتنبيهات', feat_docs_sub:'تتبع تواريخ الانتهاء تلقائياً',
+    feat_budget_title:'الميزانية والمصاريف', feat_budget_sub:'متابعة في الوقت الفعلي',
+    feat_travel_title:'العطل والتقويم', feat_travel_sub:'خطط ونظم',
+    add:'+ إضافة', save:'💾 حفظ', logout:'🚪 تسجيل الخروج', my_profile:'👤 ملفي',
+    tagline:'منزلك الرقمي.<br>نظّم حياة العائلة كلها في مكان واحد.',
   },
   de: {
     dashboard:'Dashboard', membres:'Mitglieder', agenda:'Kalender',
@@ -3921,17 +3901,31 @@ const TRANSLATIONS = {
     documents:'Dokumente', alertes:'Benachrichtigungen', enfants:'Kinder & Schule',
     vacances:'Urlaub', courses:'Einkäufe', repas:'Mahlzeiten & Kochen',
     taches:'Haushaltsaufgaben', tvatt:'Waschraum', scan:'Scannen & Importieren',
-    sante:'Gesundheit & Medizin', vehicules:'Fahrzeuge', maison:'Hauspflege',
-    contacts:'Kontakte & Notfall', assistant:'KI-Assistent', emailconfig:'E-Mail-Konfig.',
+    sante:'Gesundheit', vehicules:'Fahrzeuge', maison:'Hauspflege',
+    contacts:'Kontakte', assistant:'KI-Assistent', emailconfig:'E-Mail-Konfig.',
     parametres:'Einstellungen', admin:'Administration',
     login_title:'Willkommen zurück 👋', login_sub:'Melden Sie sich an',
-    tab_login:'Anmelden', tab_register:'Familie erstellen', tab_join:'Familie beitreten',
-    add:'+ Hinzufügen', save:'💾 Speichern', cancel:'Abbrechen', delete:'Löschen',
-    edit:'Bearbeiten', logout:'🚪 Abmelden', my_profile:'👤 Mein Profil',
-    welcome:'Willkommen', family:'Familie', member:'Mitglied', email:'E-Mail',
-    password:'Passwort', firstname:'Vorname', lastname:'Nachname', role:'Rolle',
-    country:'Land', language:'Sprache', currency:'Währung',
-    required:'Alle Felder sind erforderlich',
+    tab_login:'Anmelden', tab_register:'Konto erstellen', tab_join:'Familie beitreten',
+    reg_title:'Konto erstellen 🏠', join_title:'Meiner Familie beitreten 🤝',
+    join_sub:'Geben Sie den Code eines Elternteils ein',
+    lbl_email:'E-Mail-Adresse', lbl_password:'Passwort', lbl_remember:'E-Mail merken',
+    lbl_firstname:'Vorname', lbl_lastname:'Nachname', lbl_dob:'Geburtsdatum',
+    lbl_role:'Rolle', lbl_country:'Land', lbl_language:'Sprache', lbl_currency:'Währung',
+    lbl_family_code:'🔑 Familiencode', lbl_choose:'— Wählen —', lbl_choose_country:'— Land wählen —',
+    lbl_all_required:'Alle Felder sind erforderlich',
+    lbl_or_continue:'oder weiter mit', lbl_no_account:'noch kein Konto?',
+    lbl_have_account:'bereits ein Konto?',
+    btn_login:'🔑 Anmelden', btn_create_family:'🏡 Familie erstellen',
+    btn_join_family:'🔗 Familie beitreten', btn_create_account:'🏡 Konto erstellen',
+    btn_send_request:'📤 Anfrage senden', btn_signin:'Anmelden',
+    reg_info:'ℹ️ Ein eindeutiger Familiencode wird erstellt.',
+    join_info:'⏳ Ihre Anfrage wird zur Genehmigung an die Eltern gesendet.',
+    feat_family_title:'Ganze Familie verbunden', feat_family_sub:'Familiencode teilen',
+    feat_docs_title:'Dokumente & Alerts', feat_docs_sub:'Ablaufdaten automatisch verfolgt',
+    feat_budget_title:'Budget & Ausgaben', feat_budget_sub:'Echtzeit-Verfolgung',
+    feat_travel_title:'Urlaub & Kalender', feat_travel_sub:'Planen, organisieren',
+    add:'+ Hinzufügen', save:'💾 Speichern', logout:'🚪 Abmelden', my_profile:'👤 Mein Profil',
+    tagline:'Ihr digitales Zuhause.<br>Organisieren Sie das Familienleben an einem Ort.',
   },
   es: {
     dashboard:'Panel', membres:'Miembros', agenda:'Agenda',
@@ -3939,17 +3933,31 @@ const TRANSLATIONS = {
     documents:'Documentos', alertes:'Alertas', enfants:'Niños y Escuela',
     vacances:'Vacaciones', courses:'Compras', repas:'Comidas y Cocina',
     taches:'Tareas del hogar', tvatt:'Lavandería', scan:'Escanear e Importar',
-    sante:'Salud y Medicina', vehicules:'Vehículos', maison:'Mantenimiento hogar',
-    contacts:'Contactos y Emergencias', assistant:'Asistente IA', emailconfig:'Config. Email',
+    sante:'Salud y Medicina', vehicules:'Vehículos', maison:'Mantenimiento',
+    contacts:'Contactos', assistant:'Asistente IA', emailconfig:'Config. Email',
     parametres:'Configuración', admin:'Administración',
     login_title:'Bienvenido de vuelta 👋', login_sub:'Inicia sesión para acceder',
-    tab_login:'Iniciar sesión', tab_register:'Crear familia', tab_join:'Unirse a familia',
-    add:'+ Añadir', save:'💾 Guardar', cancel:'Cancelar', delete:'Eliminar',
-    edit:'Editar', logout:'🚪 Cerrar sesión', my_profile:'👤 Mi perfil',
-    welcome:'Bienvenido', family:'Familia', member:'Miembro', email:'Correo',
-    password:'Contraseña', firstname:'Nombre', lastname:'Apellido', role:'Rol',
-    country:'País', language:'Idioma', currency:'Moneda',
-    required:'Todos los campos son obligatorios',
+    tab_login:'Iniciar sesión', tab_register:'Crear cuenta', tab_join:'Unirse a familia',
+    reg_title:'Crear una cuenta 🏠', join_title:'Unirse a mi familia 🤝',
+    join_sub:'Introduce el código recibido de un padre',
+    lbl_email:'Correo electrónico', lbl_password:'Contraseña', lbl_remember:'Recordar mi email',
+    lbl_firstname:'Nombre', lbl_lastname:'Apellido', lbl_dob:'Fecha de nacimiento',
+    lbl_role:'Rol', lbl_country:'País', lbl_language:'Idioma', lbl_currency:'Moneda',
+    lbl_family_code:'🔑 Código familiar', lbl_choose:'— Elegir —', lbl_choose_country:'— Elegir país —',
+    lbl_all_required:'Todos los campos son obligatorios',
+    lbl_or_continue:'o continuar con', lbl_no_account:'¿sin cuenta aún?',
+    lbl_have_account:'¿ya tienes una cuenta?',
+    btn_login:'🔑 Iniciar sesión', btn_create_family:'🏡 Crear familia',
+    btn_join_family:'🔗 Unirse a mi familia', btn_create_account:'🏡 Crear mi cuenta',
+    btn_send_request:'📤 Enviar solicitud', btn_signin:'Iniciar sesión',
+    reg_info:'ℹ️ Se creará un código familiar único.',
+    join_info:'⏳ Tu solicitud se enviará a los padres para aprobación.',
+    feat_family_title:'Toda la familia conectada', feat_family_sub:'Comparte un código familiar',
+    feat_docs_title:'Documentos & Alertas', feat_docs_sub:'Fechas de vencimiento rastreadas',
+    feat_budget_title:'Presupuesto & Gastos', feat_budget_sub:'Seguimiento en tiempo real',
+    feat_travel_title:'Vacaciones & Agenda', feat_travel_sub:'Planifica, organiza',
+    add:'+ Añadir', save:'💾 Guardar', logout:'🚪 Cerrar sesión', my_profile:'👤 Mi perfil',
+    tagline:'Tu hogar digital.<br>Organiza toda la vida familiar en un solo lugar.',
   }
 };
 
@@ -3961,58 +3969,51 @@ function t(key) {
 
 function applyTranslations(lang) {
   currentLang = lang;
+
+  // Translate ALL elements with data-i18n attribute
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = TRANSLATIONS[lang]?.[key] || TRANSLATIONS['fr']?.[key];
+    if (val) el.innerHTML = val;
+  });
+
+  // Update tagline
+  const tagline = document.getElementById('auth-tagline');
+  if (tagline) tagline.innerHTML = TRANSLATIONS[lang]?.tagline || TRANSLATIONS['fr'].tagline;
+
   // Update nav items
-  const navMap = {
-    dashboard:'dashboard', membres:'membres', agenda:'agenda',
-    depenses:'depenses', factures:'factures', biens:'biens',
-    documents:'documents', alertes:'alertes', enfants:'enfants',
-    vacances:'vacances', courses:'courses', repas:'repas',
-    taches:'taches', tvatt:'tvatt', scan:'scan',
-    sante:'sante', vehicules:'vehicules', maison:'maison',
-    contacts:'contacts', assistant:'assistant', emailconfig:'emailconfig',
-    parametres:'parametres', admin:'admin'
-  };
   document.querySelectorAll('.nav-item[onclick]').forEach(item => {
     const match = item.getAttribute('onclick')?.match(/showSection\('(\w+)'\)/);
     if (match) {
       const sec = match[1];
-      const key = Object.keys(navMap).find(k => navMap[k] === sec);
-      if (key && t(key)) {
-        const icon = item.querySelector('.nav-icon');
+      const val = TRANSLATIONS[lang]?.[sec] || TRANSLATIONS['fr']?.[sec];
+      if (val) {
+        const icon  = item.querySelector('.nav-icon');
         const badge = item.querySelector('.badge-count');
-        const iconHtml = icon ? icon.outerHTML : '';
-        const badgeHtml = badge ? badge.outerHTML : '';
-        item.innerHTML = iconHtml + t(key) + badgeHtml;
-        if (icon) item.prepend(icon.cloneNode(true));
+        item.innerHTML = '';
+        if (icon)  item.appendChild(icon.cloneNode(true));
+        item.appendChild(document.createTextNode(val));
+        if (badge) item.appendChild(badge.cloneNode(true));
       }
     }
   });
 
-  // Update auth tabs
-  const tabs = document.querySelectorAll('.auth-tab-new');
-  if (tabs[0]) tabs[0].textContent = t('tab_login');
-  if (tabs[1]) tabs[1].textContent = t('tab_register');
-  if (tabs[2]) tabs[2].textContent = t('tab_join');
-
   // RTL for Arabic
   document.body.style.direction = lang === 'ar' ? 'rtl' : 'ltr';
 
-  // Update page title if section active
+  // Update page title
   const active = document.querySelector('.section.active');
   if (active) {
-    const secId = active.id.replace('section-','');
+    const secId = active.id.replace('section-', '');
     const pt = document.getElementById('page-title');
-    if (pt && t(secId)) pt.textContent = t(secId);
+    const val = TRANSLATIONS[lang]?.[secId];
+    if (pt && val) pt.textContent = val;
   }
 
-  // Update user dropdown
-  const mp = document.querySelector('[onclick*="openMyProfile"]');
-  if (mp) mp.textContent = t('my_profile');
-  const lo = document.querySelector('[onclick*="confirmLogout"]');
-  if (lo) lo.textContent = t('logout');
-
-  // Save to user
-  if (currentUser) currentUser.lang = lang;
+  // Save
+  if (currentUser?.uid) {
+    db.collection('users').doc(currentUser.uid).update({ lang }).catch(()=>{});
+  }
 }
 
 function setLanguage(code, flag, label, name) {
